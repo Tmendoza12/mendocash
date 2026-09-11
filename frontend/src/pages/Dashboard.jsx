@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
   Wallet, TrendingUp, TrendingDown, Scale, CreditCard, HandCoins, ArrowUpRight, ArrowDownRight, Landmark, AlertTriangle,
+  BarChart3, Tag, Activity,
 } from 'lucide-react';
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid,
-  LineChart, Line, PieChart, Pie, Cell,
+  LineChart, Line,
 } from 'recharts';
 import api from '../api/client.js';
 import { formatMoney, formatDate } from '../utils/format.js';
@@ -21,11 +22,38 @@ const PERIODS = [
   { value: 'last_year', label: 'Año anterior' },
 ];
 
-const PIE_COLORS = ['#5BC0BE', '#3A506B', '#86dfdb', '#1C2541', '#47a5a3', '#6fa8c7', '#8fb5a0', '#c7a06f', '#a06f8f', '#6f8fa0'];
-
 const statusLabels = {
   pending: 'Pendiente', active: 'Activo', partially_paid: 'Parcial', paid: 'Pagado', overdue: 'Vencido', cancelled: 'Cancelado',
 };
+
+function formatCompact(v) {
+  const n = Number(v || 0);
+  if (n >= 1000000) return `$${(n / 1000000).toFixed(1)}M`;
+  if (n >= 1000) return `$${(n / 1000).toFixed(0)}k`;
+  return `$${Math.round(n)}`;
+}
+
+function ChartCard({ icon: Icon, title, children }) {
+  return (
+    <div className="card p-5">
+      <div className="mb-4 flex items-center gap-3">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[11px] bg-[#e3f8f4] text-[#0b9b87]">
+          <Icon className="h-5 w-5" />
+        </span>
+        <h3 className="text-[15px] font-bold text-[#113f4b] dark:text-slate-100">{title}</h3>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function EmptyChart() {
+  return (
+    <div className="flex h-40 items-center justify-center text-sm text-ink-soft">
+      Sin datos para mostrar.
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
@@ -52,8 +80,8 @@ export default function Dashboard() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Dashboard financiero</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Resumen de tu situación financiera</p>
+          <h1 className="font-serif text-[40px] font-bold leading-[0.96] tracking-[-1px] text-[#083f49] dark:text-white">Dashboard financiero</h1>
+          <p className="mt-2 text-[14px] text-[#587984]">Resumen de tu situación financiera</p>
         </div>
         <select className="input w-auto" value={period} onChange={(e) => setPeriod(e.target.value)}>
           {PERIODS.map((p) => (
@@ -83,101 +111,104 @@ export default function Dashboard() {
       )}
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <StatCard title="Saldo total" value={formatMoney(kpis.total_balance)} icon={Wallet} color="bg-brand-50 text-brand-600 dark:bg-brand-900/30" />
-        <StatCard title="Ingresos" value={formatMoney(kpis.income)} icon={TrendingUp} color="bg-green-50 text-green-600 dark:bg-green-900/30" />
-        <StatCard title="Gastos" value={formatMoney(kpis.expense)} icon={TrendingDown} color="bg-red-50 text-red-600 dark:bg-red-900/30" />
-        <StatCard title="Balance" value={formatMoney(kpis.balance)} icon={Scale} color="bg-blue-50 text-blue-600 dark:bg-blue-900/30" />
-        <StatCard title="Patrimonio neto" value={formatMoney(kpis.net_worth)} icon={Landmark} color="bg-violet-50 text-violet-600 dark:bg-violet-900/30" />
-        <StatCard title="Total deudas" value={formatMoney(kpis.total_debts)} icon={CreditCard} color="bg-orange-50 text-orange-600 dark:bg-orange-900/30" />
-        <StatCard title="Pendiente por cobrar" value={formatMoney(kpis.receivable)} icon={ArrowUpRight} color="bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30" />
-        <StatCard title="Pendiente por pagar" value={formatMoney(kpis.payable)} icon={ArrowDownRight} color="bg-rose-50 text-rose-600 dark:bg-rose-900/30" />
+<StatCard title="Saldo total" value={formatMoney(kpis.total_balance)} icon={Wallet} color="bg-[#e1f7f3] text-[#0d9e8b]" bar="#12a994" />
+<StatCard title="Ingresos" value={formatMoney(kpis.income)} icon={TrendingUp} color="bg-[#e1f7f3] text-[#0d9e8b]" bar="#12a994" />
+<StatCard title="Gastos" value={formatMoney(kpis.expense)} icon={TrendingDown} color="bg-[#ffeded] text-[#e65b64]" bar="#12a994" />
+<StatCard title="Balance" value={formatMoney(kpis.balance)} icon={Scale} color="bg-[#e8f2ff] text-[#2874bf]" bar="#3178b9" />
+<StatCard title="Patrimonio neto" value={formatMoney(kpis.net_worth)} icon={Landmark} color="bg-[#efecff] text-[#684de0]" bar="#6a59cf" />
+<StatCard title="Total deudas" value={formatMoney(kpis.total_debts)} icon={CreditCard} color="bg-[#fff0e3] text-[#ea741e]" bar="#e7782b" />
+<StatCard title="Pendiente por cobrar" value={formatMoney(kpis.receivable)} icon={ArrowUpRight} color="bg-[#e1f7f3] text-[#0d9e8b]" bar="#12a994" />
+<StatCard title="Pendiente por pagar" value={formatMoney(kpis.payable)} icon={ArrowDownRight} color="bg-[#ffeded] text-[#e65b64]" bar="#12a994" />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <div className="card p-4">
-          <h3 className="mb-4 font-semibold">Ingresos vs gastos por mes</h3>
-          <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={monthly}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" strokeOpacity={0.3} />
-              <XAxis dataKey="label" fontSize={12} />
-              <YAxis fontSize={12} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+      <div className="grid gap-5 lg:grid-cols-2">
+        <ChartCard icon={BarChart3} title="Ingresos vs gastos por mes">
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={monthly} margin={{ left: 0, right: 8 }}>
+              <CartesianGrid strokeDasharray="3 4" stroke="#e0eaed" vertical={false} />
+              <XAxis dataKey="label" fontSize={12} tick={{ fill: '#567985' }} axisLine={{ stroke: '#9fb2b8' }} tickLine={false} />
+              <YAxis fontSize={12} tick={{ fill: '#567985' }} tickFormatter={formatCompact} axisLine={false} tickLine={false} width={48} />
               <Tooltip formatter={(v) => formatMoney(v)} />
-              <Legend />
-              <Bar dataKey="ingresos" fill="#22c55e" radius={[4, 4, 0, 0]} name="Ingresos" />
-              <Bar dataKey="gastos" fill="#ef4444" radius={[4, 4, 0, 0]} name="Gastos" />
+              <Legend wrapperStyle={{ fontSize: 12, color: '#50727c' }} />
+              <Bar dataKey="ingresos" fill="#129c88" radius={[6, 6, 0, 0]} name="Ingresos" />
+              <Bar dataKey="gastos" fill="#46bdd7" radius={[6, 6, 0, 0]} name="Gastos" />
             </BarChart>
           </ResponsiveContainer>
-        </div>
+        </ChartCard>
 
-        <div className="card p-4">
-          <h3 className="mb-4 font-semibold">Evolución del saldo</h3>
-          <ResponsiveContainer width="100%" height={280}>
-            <LineChart data={charts.balance_evolution}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" strokeOpacity={0.3} />
-              <XAxis dataKey="month" fontSize={12} tickFormatter={(v) => v.slice(5)} />
-              <YAxis fontSize={12} tickFormatter={(v) => `$${(v / 1000000).toFixed(1)}M`} />
+        <ChartCard icon={TrendingUp} title="Evolución del saldo">
+          <ResponsiveContainer width="100%" height={260}>
+            <LineChart data={charts.balance_evolution} margin={{ left: 0, right: 8 }}>
+              <CartesianGrid strokeDasharray="3 4" stroke="#e0eaed" vertical={false} />
+              <XAxis dataKey="month" fontSize={12} tick={{ fill: '#567985' }} tickFormatter={(v) => v.slice(5)} axisLine={{ stroke: '#9fb2b8' }} tickLine={false} />
+              <YAxis fontSize={12} tick={{ fill: '#567985' }} tickFormatter={formatCompact} axisLine={false} tickLine={false} width={48} />
               <Tooltip formatter={(v) => formatMoney(v)} />
-              <Line type="monotone" dataKey="cumulative" stroke="#5BC0BE" strokeWidth={2} name="Saldo acumulado" dot={false} />
+              <Line type="monotone" dataKey="cumulative" stroke="#129c88" strokeWidth={2.5} name="Saldo acumulado" dot={false} />
             </LineChart>
           </ResponsiveContainer>
-        </div>
+        </ChartCard>
 
-        <div className="card p-4">
-          <h3 className="mb-4 font-semibold">Gastos por categoría</h3>
-          <ResponsiveContainer width="100%" height={280}>
-            <PieChart>
-              <Pie data={charts.expense_by_category} dataKey="total" nameKey="name" cx="50%" cy="50%" outerRadius={90} label>
-                {charts.expense_by_category.map((entry, i) => (
-                  <Cell key={i} fill={entry.color || PIE_COLORS[i % PIE_COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip formatter={(v) => formatMoney(v)} />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+        <ChartCard icon={Tag} title="Gastos por categoría">
+          {charts.expense_by_category.length === 0 ? (
+            <EmptyChart />
+          ) : (
+            <ResponsiveContainer width="100%" height={Math.max(200, charts.expense_by_category.length * 42)}>
+              <BarChart data={charts.expense_by_category} layout="vertical" margin={{ left: 0, right: 24 }}>
+                <CartesianGrid strokeDasharray="3 4" stroke="#e0eaed" horizontal={false} />
+                <XAxis type="number" fontSize={12} tick={{ fill: '#567985' }} tickFormatter={formatCompact} axisLine={false} tickLine={false} />
+                <YAxis type="category" dataKey="name" width={130} fontSize={12} tick={{ fill: '#315f6c' }} axisLine={false} tickLine={false} />
+                <Tooltip formatter={(v) => formatMoney(v)} />
+                <Bar dataKey="total" fill="#10a992" radius={[0, 6, 6, 0]} barSize={16} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </ChartCard>
 
-        <div className="card p-4">
-          <h3 className="mb-4 font-semibold">Distribución por cuenta</h3>
-          <ResponsiveContainer width="100%" height={280}>
-            <PieChart>
-              <Pie data={charts.account_distribution} dataKey="balance" nameKey="name" cx="50%" cy="50%" outerRadius={90} label>
-                {charts.account_distribution.map((entry, i) => (
-                  <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip formatter={(v) => formatMoney(v)} />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+        <ChartCard icon={Wallet} title="Distribución por cuenta">
+          {charts.account_distribution.length === 0 ? (
+            <EmptyChart />
+          ) : (
+            <ResponsiveContainer width="100%" height={Math.max(200, charts.account_distribution.length * 42)}>
+              <BarChart data={charts.account_distribution} layout="vertical" margin={{ left: 0, right: 24 }}>
+                <CartesianGrid strokeDasharray="3 4" stroke="#e0eaed" horizontal={false} />
+                <XAxis type="number" fontSize={12} tick={{ fill: '#567985' }} tickFormatter={formatCompact} axisLine={false} tickLine={false} />
+                <YAxis type="category" dataKey="name" width={130} fontSize={12} tick={{ fill: '#315f6c' }} axisLine={false} tickLine={false} />
+                <Tooltip formatter={(v) => formatMoney(v)} />
+                <Bar dataKey="balance" fill="#47c9b4" radius={[0, 6, 6, 0]} barSize={16} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </ChartCard>
 
-        <div className="card p-4">
-          <h3 className="mb-4 font-semibold">Ingresos y gastos recientes</h3>
-          <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={rangeData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" strokeOpacity={0.3} />
-              <XAxis dataKey="name" fontSize={12} />
-              <YAxis fontSize={12} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+        <ChartCard icon={Activity} title="Ingresos y gastos recientes">
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={rangeData} margin={{ left: 0, right: 8 }}>
+              <CartesianGrid strokeDasharray="3 4" stroke="#e0eaed" vertical={false} />
+              <XAxis dataKey="name" fontSize={12} tick={{ fill: '#567985' }} axisLine={{ stroke: '#9fb2b8' }} tickLine={false} />
+              <YAxis fontSize={12} tick={{ fill: '#567985' }} tickFormatter={formatCompact} axisLine={false} tickLine={false} width={48} />
               <Tooltip formatter={(v) => formatMoney(v)} />
-              <Legend />
-              <Bar dataKey="ingresos" fill="#22c55e" radius={[4, 4, 0, 0]} name="Ingresos" />
-              <Bar dataKey="gastos" fill="#ef4444" radius={[4, 4, 0, 0]} name="Gastos" />
+              <Legend wrapperStyle={{ fontSize: 12, color: '#50727c' }} />
+              <Bar dataKey="ingresos" fill="#129c88" radius={[6, 6, 0, 0]} name="Ingresos" />
+              <Bar dataKey="gastos" fill="#46bdd7" radius={[6, 6, 0, 0]} name="Gastos" />
             </BarChart>
           </ResponsiveContainer>
-        </div>
+        </ChartCard>
 
-        <div className="card p-4">
-          <h3 className="mb-4 font-semibold">Estado de préstamos</h3>
-          <ResponsiveContainer width="100%" height={280}>
-            <PieChart>
-              <Pie data={charts.loan_status} dataKey="count" nameKey="status" cx="50%" cy="50%" outerRadius={90} label={(e) => statusLabels[e.status] || e.status}>
-                {charts.loan_status.map((entry, i) => (
-                  <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+        <ChartCard icon={HandCoins} title="Estado de préstamos">
+          {charts.loan_status.length === 0 ? (
+            <EmptyChart />
+          ) : (
+            <ResponsiveContainer width="100%" height={Math.max(200, charts.loan_status.length * 42)}>
+              <BarChart data={charts.loan_status.map((s) => ({ ...s, label: statusLabels[s.status] || s.status }))} layout="vertical" margin={{ left: 0, right: 24 }}>
+                <CartesianGrid strokeDasharray="3 4" stroke="#e0eaed" horizontal={false} />
+                <XAxis type="number" fontSize={12} tick={{ fill: '#567985' }} allowDecimals={false} axisLine={false} tickLine={false} />
+                <YAxis type="category" dataKey="label" width={130} fontSize={12} tick={{ fill: '#315f6c' }} axisLine={false} tickLine={false} />
+                <Tooltip formatter={(v) => `${v} préstamo${v === 1 ? '' : 's'}`} />
+                <Bar dataKey="count" fill="#10a992" radius={[0, 6, 6, 0]} barSize={16} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </ChartCard>
       </div>
     </div>
   );

@@ -19,11 +19,11 @@ export const listPeople = asyncHandler(async (req, res) => {
 
 export const createPerson = asyncHandler(async (req, res) => {
   const userId = targetUserIdForWrite(req, req.body.user_id);
-  const { full_name, phone, email, relation_type, notes, status = 'active' } = req.body;
+  const { full_name, phone, cedula, relation_type, notes, status = 'active' } = req.body;
   const { rows } = await query(
-    `INSERT INTO people (user_id, full_name, phone, email, relation_type, notes, status)
+    `INSERT INTO people (user_id, full_name, phone, cedula, relation_type, notes, status)
      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-    [userId, full_name, phone || null, email || null, relation_type || null, notes || null, status]
+    [userId, full_name, phone || null, cedula || null, relation_type || null, notes || null, status]
   );
   res.status(201).json({ person: rows[0] });
 });
@@ -31,15 +31,15 @@ export const createPerson = asyncHandler(async (req, res) => {
 export const updatePerson = asyncHandler(async (req, res) => {
   const userId = targetUserIdForRead(req);
   const id = req.params.id;
-  const { full_name, phone, email, relation_type, notes, status } = req.body;
+  const { full_name, phone, cedula, relation_type, notes, status } = req.body;
   const { rows: oldRows } = await query('SELECT * FROM people WHERE id = $1 AND user_id = $2', [id, userId]);
   if (!oldRows.length) return res.status(404).json({ message: 'Persona no encontrada.' });
   const old = oldRows[0];
   const { rows } = await query(
     `UPDATE people SET
-       full_name = COALESCE($2, full_name), phone = $3, email = $4, relation_type = $5, notes = $6, status = COALESCE($7, status)
+       full_name = COALESCE($2, full_name), phone = $3, cedula = $4, relation_type = $5, notes = $6, status = COALESCE($7, status)
      WHERE id = $1 RETURNING *`,
-    [id, full_name ?? old.full_name, phone ?? old.phone, email ?? old.email, relation_type ?? old.relation_type, notes ?? old.notes, status ?? old.status]
+    [id, full_name ?? old.full_name, phone ?? old.phone, cedula ?? old.cedula, relation_type ?? old.relation_type, notes ?? old.notes, status ?? old.status]
   );
   await withTransaction(async (client) => {
     await logAudit(client, { userId: req.user.id, action: 'update', module: 'personas', recordId: id, oldData: old, newData: rows[0], req });

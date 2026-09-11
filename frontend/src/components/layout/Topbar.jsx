@@ -47,12 +47,12 @@ export default function Topbar({ onMenu }) {
     .toUpperCase();
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white/90 px-4 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90">
+    <header className="sticky top-0 z-20 flex h-[78px] items-center justify-between border-b border-[#dce8ec] bg-white px-[31px] dark:border-navy-500/40 dark:bg-navy-700">
       <div className="flex items-center gap-3">
-        <button className="btn-ghost px-2 lg:hidden" onClick={onMenu}>
+        <button className="btn-ghost px-2 lg:hidden" onClick={onMenu} aria-label="Abrir menú de navegación">
           <Menu className="h-5 w-5" />
         </button>
-        <span className="text-sm text-slate-500 dark:text-slate-400">
+        <span className="text-sm text-ink-soft dark:text-slate-400">
           {new Date().toLocaleDateString('es-CO', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
         </span>
       </div>
@@ -62,6 +62,7 @@ export default function Topbar({ onMenu }) {
           <div className="relative" ref={bellRef}>
             <button
               className="btn-ghost relative px-2"
+              aria-label="Notificaciones"
               onClick={() => {
                 setBellOpen((o) => !o);
                 if (!bellOpen) loadNotifications();
@@ -105,21 +106,22 @@ export default function Topbar({ onMenu }) {
           </div>
         )}
 
-        <button className="btn-ghost px-2" onClick={toggle}>
+        <button className="btn-ghost px-2" onClick={toggle} aria-label="Cambiar entre modo claro y oscuro">
           {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </button>
 
         <div className="relative" ref={menuRef}>
           <button
-            className="flex items-center gap-2 rounded-lg px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="flex items-center gap-2 rounded-lg px-2 py-1 hover:bg-brand-50 dark:hover:bg-navy-600"
+            aria-label="Menú de usuario"
             onClick={() => setMenuOpen((o) => !o)}
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-600 text-sm font-semibold text-white">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white" style={{ background: 'linear-gradient(145deg, #55b8ae, #249a91)' }}>
               {initials}
             </div>
             <div className="hidden text-left sm:block">
-              <p className="text-sm font-medium leading-tight text-slate-700 dark:text-slate-200">{user?.full_name}</p>
-              <p className="text-xs leading-tight text-slate-400">{user?.roles?.map((r) => r.name).join(', ') || ''}</p>
+              <p className="text-sm font-medium leading-tight text-ink dark:text-slate-200">{user?.full_name}</p>
+              <p className="text-xs leading-tight text-ink-soft">{user?.roles?.map((r) => r.name).join(', ') || ''}</p>
             </div>
           </button>
           {menuOpen && (

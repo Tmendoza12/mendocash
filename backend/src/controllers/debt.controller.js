@@ -63,13 +63,13 @@ export const createDebt = asyncHandler(async (req, res) => {
   const userId = targetUserIdForWrite(req, req.body.user_id);
   const {
     creditor, concept, amount, start_date, due_date, interest_rate = 0,
-    num_installments = 1, installment_amount = 0, status = 'pending',
+    num_installments = 1, installment_amount = 0, status = 'pending', person_id = null,
   } = req.body;
 
   const { rows } = await query(
-    `INSERT INTO debts (user_id, creditor, concept, amount, start_date, due_date, interest_rate, num_installments, installment_amount, status)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
-    [userId, creditor, concept || null, amount, start_date, due_date || null, interest_rate, num_installments, installment_amount, status]
+    `INSERT INTO debts (user_id, creditor, concept, amount, start_date, due_date, interest_rate, num_installments, installment_amount, status, person_id)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`,
+    [userId, creditor, concept || null, amount, start_date, due_date || null, interest_rate, num_installments, installment_amount, status, person_id || null]
   );
   res.status(201).json({ debt: rows[0] });
 });
@@ -78,7 +78,7 @@ export const updateDebt = asyncHandler(async (req, res) => {
   const userId = targetUserIdForRead(req);
   const id = req.params.id;
   const {
-    creditor, concept, amount, start_date, due_date, interest_rate, num_installments, installment_amount, status,
+    creditor, concept, amount, start_date, due_date, interest_rate, num_installments, installment_amount, status, person_id,
   } = req.body;
 
   const debt = await withTransaction(async (client) => {
@@ -94,11 +94,11 @@ export const updateDebt = asyncHandler(async (req, res) => {
          creditor = COALESCE($2, creditor), concept = $3, amount = COALESCE($4, amount),
          start_date = COALESCE($5, start_date), due_date = $6, interest_rate = COALESCE($7, interest_rate),
          num_installments = COALESCE($8, num_installments), installment_amount = COALESCE($9, installment_amount),
-         status = COALESCE($10, status), updated_at = now()
+         status = COALESCE($10, status), person_id = $11, updated_at = now()
        WHERE id = $1 RETURNING *`,
       [id, creditor ?? old.creditor, concept ?? old.concept, amount ?? old.amount, start_date ?? old.start_date,
         due_date ?? old.due_date, interest_rate ?? old.interest_rate, num_installments ?? old.num_installments,
-        installment_amount ?? old.installment_amount, status ?? old.status]
+        installment_amount ?? old.installment_amount, status ?? old.status, person_id ?? old.person_id]
     );
     await refreshDebtStatus(client, id);
     await logAudit(client, { userId: req.user.id, action: 'update', module: 'deudas', recordId: id, oldData: old, newData: rows[0], req });

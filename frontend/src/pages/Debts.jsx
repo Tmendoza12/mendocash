@@ -12,7 +12,7 @@ import { TextInput, SelectInput, MoneyInput, Textarea } from '../components/ui/F
 
 const emptyForm = {
   creditor: '', concept: '', amount: '', start_date: todayISO(), due_date: '',
-  interest_rate: 0, num_installments: 1, installment_amount: 0, status: 'pending',
+  interest_rate: 0, num_installments: 1, installment_amount: 0, status: 'pending', person_id: '',
 };
 
 export default function Debts() {
@@ -20,6 +20,7 @@ export default function Debts() {
   const toast = useToast();
   const [data, setData] = useState([]);
   const [accounts, setAccounts] = useState([]);
+  const [people, setPeople] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [editing, setEditing] = useState(null);
@@ -32,10 +33,10 @@ export default function Debts() {
   const [payForm, setPayForm] = useState({ date: todayISO(), amount: '', account_id: '', notes: '' });
 
   const load = () => api.get('/debts').then((r) => setData(r.data.data)).finally(() => setLoading(false));
-  useEffect(() => { load(); api.get('/accounts').then((r) => setAccounts(r.data.data)); }, []);
+  useEffect(() => { load(); api.get('/accounts').then((r) => setAccounts(r.data.data)); api.get('/people').then((r) => setPeople(r.data.data)); }, []);
 
   const openCreate = () => { setEditing(null); setForm(emptyForm); setModal(true); };
-  const openEdit = (d) => { setEditing(d); setForm({ ...d }); setModal(true); };
+  const openEdit = (d) => { setEditing(d); setForm({ ...d, person_id: d.person_id || '' }); setModal(true); };
 
   const save = async (e) => {
     e.preventDefault();
@@ -104,6 +105,10 @@ export default function Debts() {
             <TextInput label="Acreedor" required value={form.creditor} onChange={(e) => setForm({ ...form, creditor: e.target.value })} />
             <TextInput label="Concepto" value={form.concept || ''} onChange={(e) => setForm({ ...form, concept: e.target.value })} />
           </div>
+          <SelectInput label="Persona relacionada (opcional)" value={form.person_id || ''} onChange={(e) => setForm({ ...form, person_id: e.target.value })}>
+            <option value="">Sin persona</option>
+            {people.map((p) => <option key={p.id} value={p.id}>{p.full_name}{p.cedula ? ` — ${p.cedula}` : ''}</option>)}
+          </SelectInput>
           <div className="grid grid-cols-3 gap-3">
             <MoneyInput label="Valor" required value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} />
             <TextInput label="Tasa interés (%)" type="number" step="0.01" value={form.interest_rate} onChange={(e) => setForm({ ...form, interest_rate: e.target.value })} />

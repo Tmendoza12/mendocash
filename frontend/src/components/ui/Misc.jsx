@@ -34,25 +34,24 @@ export function PageHeader({ title, subtitle, actions }) {
   return (
     <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{title}</h1>
-        {subtitle && <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{subtitle}</p>}
+        <h1 className="font-serif text-[30px] font-bold leading-tight tracking-tight text-ink dark:text-white">{title}</h1>
+        {subtitle && <p className="mt-1 text-[15px] text-ink-soft">{subtitle}</p>}
       </div>
       {actions && <div className="flex items-center gap-2">{actions}</div>}
     </div>
   );
 }
 
-export function StatCard({ title, value, icon: Icon, color = 'bg-brand-50 text-brand-600 dark:bg-brand-900/30', hint }) {
+export function StatCard({ title, value, icon: Icon, color = 'bg-[#e1f7f3] text-[#0d9e8b]', bar = '#12a994', hint }) {
   return (
-    <div className="card p-4">
-      <div className="flex items-center justify-between">
-        <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${color}`}>
-          <Icon className="h-5 w-5" />
-        </div>
+    <div className="card relative min-h-[158px] overflow-hidden px-[29px] py-[17px] transition-all duration-200 hover:-translate-y-[3px] hover:shadow-soft-hover">
+      <span className="absolute bottom-[14px] left-0 top-[14px] w-1 rounded-r-md" style={{ backgroundColor: bar }} />
+      <div className={`flex h-[45px] w-[45px] items-center justify-center rounded-[14px] ${color}`}>
+        <Icon className="h-6 w-6" />
       </div>
-      <p className="mt-3 text-sm font-medium text-slate-500 dark:text-slate-400">{title}</p>
-      <p className="mt-1 text-xl font-bold text-slate-800 dark:text-slate-100">{value}</p>
-      {hint && <p className="mt-1 text-xs text-slate-400">{hint}</p>}
+      <p className="mt-[13px] text-[13px] font-medium text-[#3e6976]">{title}</p>
+      <p className="mt-[7px] text-[26px] font-extrabold leading-none tracking-[-0.4px] text-[#073e49] dark:text-white">{value}</p>
+      {hint && <p className="mt-2 text-[10px] text-ink-soft">{hint}</p>}
     </div>
   );
 }

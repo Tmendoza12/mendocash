@@ -16,11 +16,13 @@ export const updateSettings = asyncHandler(async (req, res) => {
   const updates = req.body.settings || {};
   await withTransaction(async (client) => {
     for (const [key, value] of Object.entries(updates)) {
-      await client.query(
-        `INSERT INTO settings (key, value) VALUES ($1, $2)
-         ON CONFLICT (key, user_id) DO UPDATE SET value = EXCLUDED.value, updated_at = now()`,
+      const { rowCount } = await client.query(
+        'UPDATE settings SET value = $2, updated_at = now() WHERE key = $1 AND user_id IS NULL',
         [key, String(value)]
       );
+      if (rowCount === 0) {
+        await client.query('INSERT INTO settings (key, value) VALUES ($1, $2)', [key, String(value)]);
+      }
     }
     await logAudit(client, { userId: req.user.id, action: 'update', module: 'configuracion', newData: updates, req });
   });

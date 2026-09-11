@@ -18,12 +18,12 @@ export default function People() {
   const [editing, setEditing] = useState(null);
   const [deleting, setDeleting] = useState(null);
   const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState({ full_name: '', phone: '', email: '', relation_type: '', notes: '', status: 'active' });
+  const [form, setForm] = useState({ full_name: '', phone: '', cedula: '', relation_type: '', notes: '', status: 'active' });
 
   const load = () => api.get('/people').then((r) => setData(r.data.data)).finally(() => setLoading(false));
   useEffect(() => { load(); }, []);
 
-  const openCreate = () => { setEditing(null); setForm({ full_name: '', phone: '', email: '', relation_type: '', notes: '', status: 'active' }); setModal(true); };
+  const openCreate = () => { setEditing(null); setForm({ full_name: '', phone: '', cedula: '', relation_type: '', notes: '', status: 'active' }); setModal(true); };
   const openEdit = (p) => { setEditing(p); setForm({ ...p }); setModal(true); };
 
   const save = async (e) => {
@@ -51,7 +51,7 @@ export default function People() {
       </div>
     )},
     { key: 'phone', header: 'Teléfono', render: (p) => p.phone || '-' },
-    { key: 'email', header: 'Correo', render: (p) => p.email || '-' },
+    { key: 'cedula', header: 'Cédula', render: (p) => p.cedula || '-' },
     { key: 'relation_type', header: 'Relación', render: (p) => p.relation_type || '-' },
     { key: 'loans_count', header: 'Préstamos', render: (p) => p.loans_count },
     { key: 'status', header: 'Estado', render: (p) => <Badge color={p.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'}>{p.status === 'active' ? 'Activo' : 'Inactivo'}</Badge> },
@@ -80,7 +80,7 @@ export default function People() {
           <TextInput label="Nombre completo" required value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} />
           <div className="grid grid-cols-2 gap-3">
             <TextInput label="Teléfono" value={form.phone || ''} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
-            <TextInput label="Correo" type="email" value={form.email || ''} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+            <TextInput label="Cédula" value={form.cedula || ''} onChange={(e) => setForm({ ...form, cedula: e.target.value })} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <SelectInput label="Tipo de relación" value={form.relation_type || ''} onChange={(e) => setForm({ ...form, relation_type: e.target.value })}>

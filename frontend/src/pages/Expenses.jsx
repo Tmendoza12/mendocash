@@ -17,6 +17,7 @@ export default function Expenses() {
   const [accounts, setAccounts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
+  const [people, setPeople] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ export default function Expenses() {
   const [deleting, setDeleting] = useState(null);
   const [saving, setSaving] = useState(false);
   const [filters, setFilters] = useState({ search: '', from: '', to: '', category_id: '', account_id: '', payment_method: '', min_amount: '', max_amount: '' });
-  const [form, setForm] = useState({ account_id: '', category_id: '', subcategory_id: '', date: todayISO(), description: '', amount: '', payment_method: '', merchant: '', is_recurring: false, notes: '' });
+  const [form, setForm] = useState({ account_id: '', category_id: '', subcategory_id: '', date: todayISO(), description: '', amount: '', payment_method: '', merchant: '', is_recurring: false, notes: '', person_id: '', is_payment_to_person: false });
 
   const buildQuery = (p) => {
     const q = new URLSearchParams();
@@ -46,6 +47,7 @@ export default function Expenses() {
     load(1);
     api.get('/accounts').then((r) => setAccounts(r.data.data));
     api.get('/categories?type=expense').then((r) => setCategories(r.data.data));
+    api.get('/people').then((r) => setPeople(r.data.data));
   }, []);
 
   const onCategoryChange = (categoryId) => {
@@ -57,14 +59,14 @@ export default function Expenses() {
   const openCreate = () => {
     setEditing(null);
     setSubcategories([]);
-    setForm({ account_id: accounts[0]?.id || '', category_id: '', subcategory_id: '', date: todayISO(), description: '', amount: '', payment_method: '', merchant: '', is_recurring: false, notes: '' });
+    setForm({ account_id: accounts[0]?.id || '', category_id: '', subcategory_id: '', date: todayISO(), description: '', amount: '', payment_method: '', merchant: '', is_recurring: false, notes: '', person_id: '', is_payment_to_person: false });
     setModal(true);
   };
   const openEdit = (e) => {
     setEditing(e);
     const cat = categories.find((c) => c.id == e.category_id);
     setSubcategories(cat?.subcategories || []);
-    setForm({ ...e });
+    setForm({ ...e, person_id: e.person_id || '', is_payment_to_person: !!e.is_payment_to_person });
     setModal(true);
   };
 
@@ -101,6 +103,7 @@ export default function Expenses() {
     { key: 'date', header: 'Fecha', render: (e) => formatDate(e.date) },
     { key: 'description', header: 'Descripción', render: (e) => <span className="font-medium">{e.description || '-'}</span> },
     { key: 'category_name', header: 'Categoría', render: (e) => e.category_name || '-' },
+    { key: 'person_name', header: 'Persona', render: (e) => e.person_name || '-' },
     { key: 'account_name', header: 'Cuenta', render: (e) => e.account_name || '-' },
     { key: 'payment_method', header: 'Método', render: (e) => e.payment_method || '-' },
     { key: 'amount', header: 'Valor', render: (e) => <span className="font-semibold text-red-600">{formatMoney(e.amount)}</span> },
@@ -184,6 +187,16 @@ export default function Expenses() {
             </SelectInput>
             <TextInput label="Comercio / proveedor" value={form.merchant || ''} onChange={(e) => setForm({ ...form, merchant: e.target.value })} />
           </div>
+          <SelectInput label="Persona relacionada (opcional)" value={form.person_id || ''} onChange={(e) => setForm({ ...form, person_id: e.target.value, is_payment_to_person: e.target.value ? form.is_payment_to_person : false })}>
+            <option value="">Sin persona</option>
+            {people.map((p) => <option key={p.id} value={p.id}>{p.full_name}{p.cedula ? ` — ${p.cedula}` : ''}</option>)}
+          </SelectInput>
+          {form.person_id && (
+            <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+              <input type="checkbox" className="h-4 w-4" checked={form.is_payment_to_person} onChange={(e) => setForm({ ...form, is_payment_to_person: e.target.checked })} />
+              Este gasto es un pago a esta persona (se descuenta de su deuda o préstamo)
+            </label>
+          )}
           <TextInput label="Descripción" value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} />
           <Textarea label="Observaciones" value={form.notes || ''} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
           <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">

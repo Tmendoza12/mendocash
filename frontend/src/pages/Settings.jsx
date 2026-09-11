@@ -69,9 +69,9 @@ export default function Settings() {
                 ['Monedas', catalogs.currencies],
               ].map(([title, items]) => (
                 <div key={title}>
-                  <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">{title}</p>
+                  <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-soft">{title}</p>
                   <div className="flex flex-wrap gap-1">
-                    {items.map((it) => <span key={it} className="rounded bg-slate-100 px-2 py-0.5 text-xs dark:bg-slate-800">{it}</span>)}
+                    {items.map((it) => <span key={it} className="rounded bg-brand-50 px-2 py-0.5 text-xs text-ink">{it}</span>)}
                   </div>
                 </div>
               ))}

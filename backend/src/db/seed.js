@@ -332,16 +332,16 @@ async function seedDemoFinance(userId, name, seed) {
 
   // Personas
   const people = [
-    ['Carlos Ramírez', '3011112233', 'carlos@mail.com', 'Amigo', 'active'],
-    ['Laura Gómez', '3023334455', 'laura@mail.com', 'Familiar', 'active'],
-    ['Banco Davivienda', null, null, 'Entidad', 'active'],
+    ['Carlos Ramírez', '3011112233', '1023456789', 'Amigo', 'active'],
+    ['Laura Gómez', '3023334455', '1098765432', 'Familiar', 'active'],
+    ['Banco Davivienda', null, '900123456', 'Entidad', 'active'],
   ];
   const personIds = {};
-  for (const [pname, phone, email, relation, status] of people) {
+  for (const [pname, phone, cedula, relation, status] of people) {
     const { rows } = await client.query(
-      `INSERT INTO people (user_id, full_name, phone, email, relation_type, status)
+      `INSERT INTO people (user_id, full_name, phone, cedula, relation_type, status)
        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
-      [userId, pname, phone, email, relation, status]
+      [userId, pname, phone, cedula, relation, status]
     );
     personIds[pname] = rows[0].id;
   }
