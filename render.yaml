@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: mendocash
+    runtime: node
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build && cd ../backend && npm install
+    startCommand: node backend/src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GOOGLE_CLIENT_ID
+        value: 893322676347-bfekqg3i7j1k70umrd7qnierctis1amr.apps.googleusercontent.com
+      - key: VITE_GOOGLE_CLIENT_ID
+        value: 893322676347-bfekqg3i7j1k70umrd7qnierctis1amr.apps.googleusercontent.com

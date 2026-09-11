@@ -1,0 +1,3746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="MendoCash - Gestión personal de finanzas"
+    >
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235BC0BE'%3E%3Cpath d='M3 3v18h18V3H3zm8 14H9v-7h2v7zm4 0h-2V7h2v10z'/%3E%3C/svg%3E" />
+
+    <title>MendoCash | Iniciar sesión</title>
+
+    <style>
+
+        /* =========================================================
+           FUENTES
+        ========================================================= */
+
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+
+        /* =========================================================
+           VARIABLES
+        ========================================================= */
+
+        :root {
+
+            --green-dark: #064f4a;
+            --green-deep: #033f3b;
+            --green-main: #16ad91;
+            --green-light: #3fd0ad;
+            --green-soft: #dff6ef;
+
+            --white: #ffffff;
+            --text-dark: #073f3d;
+            --text-gray: #78908e;
+            --border: #dce7e6;
+
+            --background: #eef4f3;
+
+            --shadow:
+                0 30px 70px rgba(5, 59, 56, 0.14);
+
+            --radius: 28px;
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+
+            font-family:
+                "DM Sans",
+                Arial,
+                sans-serif;
+
+            background: var(--background);
+
+            color: var(--text-dark);
+
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            border: none;
+        }
+
+
+        /* =========================================================
+           CONTENEDOR PRINCIPAL
+        ========================================================= */
+
+        .page {
+            width: 100%;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 18px;
+        }
+
+
+        /* =========================================================
+           CARD PRINCIPAL
+        ========================================================= */
+
+        .login-card {
+
+            width: min(1540px, 100%);
+
+            min-height: min(880px, calc(100vh - 36px));
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.08fr)
+                minmax(440px, 0.92fr);
+
+            background: var(--white);
+
+            border-radius: var(--radius);
+
+            overflow: hidden;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        /* =========================================================
+           PANEL IZQUIERDO
+        ========================================================= */
+
+        .brand-panel {
+
+            position: relative;
+
+            min-width: 0;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 100% 0%,
+                    rgba(54, 205, 170, 0.18),
+                    transparent 34%
+                ),
+                linear-gradient(
+                    145deg,
+                    #064d49 0%,
+                    #064e4a 48%,
+                    #043f3c 100%
+                );
+
+            color: white;
+
+            padding:
+                clamp(42px, 5vw, 78px)
+                clamp(38px, 5vw, 82px);
+
+            display: flex;
+            flex-direction: column;
+
+            isolation: isolate;
+        }
+
+
+        /* Decoraciones */
+
+        .brand-panel::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 480px;
+            height: 480px;
+
+            border: 1px solid rgba(86, 224, 192, 0.16);
+
+            border-radius: 50%;
+
+            right: -240px;
+            top: -250px;
+
+            z-index: -1;
+        }
+
+        .brand-panel::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 520px;
+            height: 520px;
+
+            border: 1px solid rgba(86, 224, 192, 0.10);
+
+            border-radius: 50%;
+
+            left: -390px;
+            bottom: -300px;
+
+            z-index: -1;
+        }
+
+
+        /* =========================================================
+           LOGO
+        ========================================================= */
+
+        .brand-logo {
+
+            display: flex;
+            align-items: center;
+
+            gap: 20px;
+
+            width: fit-content;
+
+            margin-bottom: clamp(55px, 7vh, 90px);
+        }
+
+
+        .logo-symbol {
+
+            width: 58px;
+            height: 58px;
+
+            flex: 0 0 58px;
+        }
+
+
+        .brand-name {
+
+            font-family:
+                "Cormorant Garamond",
+                Georgia,
+                serif;
+
+            font-size:
+                clamp(39px, 3.3vw, 58px);
+
+            line-height: 0.85;
+
+            letter-spacing: -1.5px;
+
+            white-space: nowrap;
+        }
+
+        .brand-name span {
+            color: var(--green-light);
+        }
+
+
+        .brand-tagline {
+
+            margin-top: 10px;
+
+            font-size: 11px;
+
+            letter-spacing: 5px;
+
+            color: rgba(255,255,255,0.76);
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+           HERO IZQUIERDO
+        ========================================================= */
+
+        .brand-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 610px;
+
+            flex: 1;
+        }
+
+
+        .hero-title {
+
+            font-family:
+                "Cormorant Garamond",
+                Georgia,
+                serif;
+
+            font-weight: 600;
+
+            font-size:
+                clamp(58px, 5.6vw, 92px);
+
+            line-height: 0.88;
+
+            letter-spacing: -3px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .hero-title .accent {
+
+            display: block;
+
+            color: var(--green-light);
+
+            font-style: italic;
+
+            margin-left: clamp(20px, 2vw, 38px);
+        }
+
+
+        .hero-title .last {
+
+            display: block;
+        }
+
+
+        .hero-description {
+
+            width: min(100%, 535px);
+
+            font-size:
+                clamp(14px, 1.05vw, 17px);
+
+            line-height: 1.75;
+
+            color: rgba(255,255,255,0.82);
+
+            margin-bottom: 38px;
+        }
+
+
+        /* =========================================================
+           CARACTERÍSTICAS
+        ========================================================= */
+
+        .features {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 16px;
+
+            width: min(100%, 410px);
+        }
+
+
+        .feature {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            min-height: 48px;
+        }
+
+
+        .feature-icon {
+
+            width: 42px;
+            height: 42px;
+
+            flex: 0 0 42px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(73, 213, 177, 0.25);
+
+            background: rgba(53, 198, 163, 0.10);
+
+            color: var(--green-light);
+        }
+
+
+        .feature-icon svg {
+
+            width: 17px;
+            height: 17px;
+        }
+
+
+        .feature-text {
+
+            font-size: 14px;
+
+            color: rgba(255,255,255,0.92);
+
+            line-height: 1.3;
+        }
+
+
+        /* =========================================================
+           TELEFONO
+        ========================================================= */
+
+        .phone-wrapper {
+
+            position: absolute;
+
+            z-index: 3;
+
+            right:
+                clamp(-80px, -3vw, -30px);
+
+            bottom: -55px;
+
+            width:
+                clamp(290px, 28vw, 420px);
+
+            transform:
+                rotate(7deg);
+
+            filter:
+                drop-shadow(
+                    0 28px 25px rgba(0,0,0,0.30)
+                );
+
+            pointer-events: none;
+
+            animation: phoneFloat 5s ease-in-out infinite;
+        }
+
+
+        @keyframes phoneFloat {
+
+            0%,
+            100% {
+                transform:
+                    rotate(7deg)
+                    translateY(0);
+            }
+
+            50% {
+                transform:
+                    rotate(7deg)
+                    translateY(-10px);
+            }
+        }
+
+
+        .phone {
+
+            position: relative;
+
+            width: 100%;
+
+            aspect-ratio: 0.49;
+
+            border-radius: 50px;
+
+            padding: 10px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #647777,
+                    #263e3d
+                );
+
+            border: 2px solid rgba(255,255,255,0.32);
+        }
+
+
+        .phone-screen {
+
+            position: relative;
+
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+
+            border-radius: 42px;
+
+            background:
+                linear-gradient(
+                    160deg,
+                    #f5faf9,
+                    #edf5f4
+                );
+
+            color: #164a47;
+
+            padding: 30px 20px 18px;
+
+            box-shadow:
+                inset 0 0 0 1px rgba(0,0,0,0.05);
+        }
+
+
+        .phone-notch {
+
+            position: absolute;
+
+            top: 10px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 82px;
+            height: 22px;
+
+            border-radius: 20px;
+
+            background: #263e3d;
+        }
+
+
+        .phone-time {
+
+            font-size: 9px;
+
+            color: #617a78;
+
+            margin-bottom: 13px;
+        }
+
+
+        .phone-greeting {
+
+            font-size: 9px;
+
+            color: #91a8a6;
+        }
+
+
+        .phone-user {
+
+            font-size: 19px;
+
+            font-weight: 700;
+
+            margin-bottom: 18px;
+        }
+
+
+        .phone-balance {
+
+            padding: 18px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0d9c83,
+                    #20b79a
+                );
+
+            color: white;
+
+            box-shadow:
+                0 12px 25px rgba(10, 148, 123, 0.20);
+        }
+
+
+        .balance-label {
+
+            font-size: 8px;
+
+            opacity: 0.8;
+
+            margin-bottom: 5px;
+        }
+
+
+        .balance-value {
+
+            font-size: 23px;
+
+            font-weight: 700;
+
+            letter-spacing: -0.5px;
+        }
+
+
+        .phone-summary {
+
+            margin-top: 12px;
+
+            padding: 17px;
+
+            background: white;
+
+            border-radius: 19px;
+
+            box-shadow:
+                0 7px 20px rgba(12, 70, 67, 0.06);
+        }
+
+
+        .summary-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 7px 0;
+
+            font-size: 8px;
+        }
+
+
+        .summary-value.green {
+            color: #079c80;
+        }
+
+        .summary-value.red {
+            color: #ee6868;
+        }
+
+        .summary-value.blue {
+            color: #765bd8;
+        }
+
+
+        .phone-section {
+
+            margin-top: 15px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            font-size: 9px;
+
+            font-weight: 600;
+        }
+
+
+        .phone-movements {
+
+            margin-top: 8px;
+
+            background: white;
+
+            border-radius: 17px;
+
+            padding: 7px 12px;
+        }
+
+
+        .movement {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 9px 0;
+
+            border-bottom: 1px solid #edf2f1;
+
+            font-size: 7px;
+        }
+
+
+        .movement:last-child {
+            border-bottom: none;
+        }
+
+
+        .movement-name {
+            color: #92a5a3;
+        }
+
+
+        .movement-value.red {
+            color: #ec6868;
+        }
+
+        .movement-value.green {
+            color: #09a486;
+        }
+
+
+        .phone-bottom {
+
+            position: absolute;
+
+            left: 20px;
+            right: 20px;
+
+            bottom: 15px;
+
+            display: flex;
+
+            justify-content: space-around;
+
+            align-items: center;
+
+            color: #8aa19f;
+
+            font-size: 7px;
+        }
+
+
+        .phone-plus {
+
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #13ae91;
+
+            color: white;
+
+            font-size: 22px;
+        }
+
+
+        /* =========================================================
+           FRASE INFERIOR
+        ========================================================= */
+
+        .brand-footer {
+
+            position: relative;
+
+            z-index: 5;
+
+            margin-top: 30px;
+
+            max-width: 350px;
+
+            font-family:
+                "Cormorant Garamond",
+                Georgia,
+                serif;
+
+            font-size:
+                clamp(23px, 2vw, 32px);
+
+            line-height: 0.95;
+
+            font-style: italic;
+
+            font-weight: 600;
+
+            color: white;
+        }
+
+
+        .brand-footer::after {
+
+            content: "";
+
+            display: block;
+
+            width: 130px;
+            height: 3px;
+
+            margin-top: 14px;
+
+            background: var(--green-light);
+
+            transform:
+                skewX(-25deg);
+        }
+
+
+        /* =========================================================
+           PANEL DERECHO
+        ========================================================= */
+
+        .form-panel {
+
+            min-width: 0;
+
+            background: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding:
+                clamp(45px, 5vw, 85px)
+                clamp(38px, 6vw, 100px);
+        }
+
+
+        .form-container {
+
+            width: min(100%, 530px);
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        /* =========================================================
+           LOGO FORMULARIO
+        ========================================================= */
+
+        .form-logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            margin-bottom:
+                clamp(48px, 6vh, 70px);
+        }
+
+
+        .form-logo .logo-symbol {
+
+            width: 50px;
+            height: 50px;
+
+            flex-basis: 50px;
+        }
+
+
+        .form-logo-text {
+
+            font-family:
+                "Cormorant Garamond",
+                Georgia,
+                serif;
+
+            font-size:
+                clamp(34px, 3vw, 46px);
+
+            line-height: 0.8;
+
+            letter-spacing: -1px;
+
+            white-space: nowrap;
+        }
+
+
+        .form-logo-text span {
+            color: #0da786;
+        }
+
+
+        .form-logo-subtitle {
+
+            margin-top: 8px;
+
+            font-size: 9px;
+
+            letter-spacing: 4px;
+
+            color: #8ca09f;
+        }
+
+
+        /* =========================================================
+           TITULO LOGIN
+        ========================================================= */
+
+        .login-heading {
+
+            font-family:
+                "Cormorant Garamond",
+                Georgia,
+                serif;
+
+            font-size:
+                clamp(44px, 4vw, 62px);
+
+            line-height: 0.95;
+
+            font-weight: 600;
+
+            letter-spacing: -1.8px;
+
+            color: var(--text-dark);
+
+            margin-bottom: 10px;
+        }
+
+
+        .login-description {
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            color: var(--text-gray);
+
+            margin-bottom:
+                clamp(30px, 4vh, 40px);
+        }
+
+
+        /* =========================================================
+           FORMULARIO
+        ========================================================= */
+
+        .login-form {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 17px;
+        }
+
+
+        .field {
+
+            position: relative;
+
+            width: 100%;
+        }
+
+
+        .field-icon {
+
+            position: absolute;
+
+            left: 20px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 18px;
+            height: 18px;
+
+            color: #78918f;
+
+            pointer-events: none;
+        }
+
+
+        .field input {
+
+            width: 100%;
+
+            height: 57px;
+
+            padding:
+                0 52px 0 51px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 13px;
+
+            background: #ffffff;
+
+            color: #173f3d;
+
+            outline: none;
+
+            font-size: 13px;
+
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+
+
+        .field input::placeholder {
+            color: #9aaba9;
+        }
+
+
+        .field input:focus {
+
+            border-color: #25ae96;
+
+            background: #fbfefd;
+
+            box-shadow:
+                0 0 0 4px rgba(22,173,145,0.08);
+        }
+
+
+        /* =========================================================
+           BOTON CONTRASEÑA
+        ========================================================= */
+
+        .password-toggle {
+
+            position: absolute;
+
+            right: 17px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 27px;
+            height: 27px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: transparent;
+
+            color: #6d8583;
+
+            cursor: pointer;
+
+            border-radius: 50%;
+
+            transition:
+                color 0.2s ease,
+                background 0.2s ease;
+        }
+
+
+        .password-toggle:hover {
+
+            color: #0d9e82;
+
+            background: #edf8f5;
+        }
+
+
+        .password-toggle svg {
+
+            width: 16px;
+            height: 16px;
+        }
+
+
+        /* =========================================================
+           OPCIONES
+        ========================================================= */
+
+        .form-options {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-top: 1px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .remember {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            font-size: 11px;
+
+            color: #718886;
+
+            cursor: pointer;
+
+            user-select: none;
+        }
+
+
+        .remember input {
+
+            appearance: none;
+
+            width: 17px;
+            height: 17px;
+
+            border:
+                1px solid #a8b9b7;
+
+            border-radius: 3px;
+
+            background: white;
+
+            cursor: pointer;
+
+            position: relative;
+        }
+
+
+        .remember input:checked {
+
+            background: #12aa8d;
+
+            border-color: #12aa8d;
+        }
+
+
+        .remember input:checked::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 5px;
+            height: 9px;
+
+            border:
+                solid white;
+
+            border-width:
+                0 2px 2px 0;
+
+            transform:
+                rotate(45deg);
+
+            left: 5px;
+            top: 2px;
+        }
+
+
+        .forgot {
+
+            color: #078e77;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            white-space: nowrap;
+        }
+
+
+        .forgot:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================================
+           BOTON LOGIN
+        ========================================================= */
+
+        .login-button {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 57px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 16px;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #1bb394,
+                    #0c9e82
+                );
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 25px rgba(15, 159, 130, 0.18);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                filter 0.2s ease;
+        }
+
+
+        .login-button:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 16px 30px rgba(15, 159, 130, 0.25);
+
+            filter: brightness(1.03);
+        }
+
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+
+        .login-button svg {
+
+            width: 20px;
+            height: 20px;
+
+            transition:
+                transform 0.2s ease;
+        }
+
+
+        .login-button:hover svg {
+            transform: translateX(4px);
+        }
+
+
+        .login-button.loading {
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+
+        .login-button.loading .arrow {
+            display: none;
+        }
+
+
+        .spinner {
+
+            display: none;
+
+            width: 17px;
+            height: 17px;
+
+            border:
+                2px solid rgba(255,255,255,0.35);
+
+            border-top-color: white;
+
+            border-radius: 50%;
+
+            animation:
+                spin 0.8s linear infinite;
+        }
+
+
+        .login-button.loading .spinner {
+            display: block;
+        }
+
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* =========================================================
+           SEPARADOR
+        ========================================================= */
+
+        .separator {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            margin:
+                10px 0 18px;
+
+            color: #9aacab;
+
+            font-size: 10px;
+        }
+
+
+        .separator::before,
+        .separator::after {
+
+            content: "";
+
+            height: 1px;
+
+            flex: 1;
+
+            background: #e1e9e8;
+        }
+
+
+        /* =========================================================
+           GOOGLE
+        ========================================================= */
+
+        .google-button {
+
+            width: 100%;
+
+            height: 57px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 13px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 13px;
+
+            background: white;
+
+            color: #173b3a;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .google-button:hover {
+
+            background: #fbfdfd;
+
+            border-color: #cbdad8;
+
+            transform: translateY(-1px);
+        }
+
+
+        .google-icon {
+
+            width: 19px;
+            height: 19px;
+        }
+
+
+        /* =========================================================
+           REGISTRO
+        ========================================================= */
+
+        .register {
+
+            text-align: center;
+
+            margin-top:
+                clamp(34px, 5vh, 52px);
+
+            font-size: 11px;
+
+            color: #899c9a;
+        }
+
+
+        .register a {
+
+            color: #078e77;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            margin-left: 5px;
+        }
+
+
+        .register a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================================
+           TABLET
+        ========================================================= */
+
+        @media (max-width: 1150px) {
+
+            .login-card {
+
+                grid-template-columns:
+                    minmax(0, 1fr)
+                    minmax(390px, 0.85fr);
+            }
+
+
+            .brand-panel {
+
+                padding:
+                    45px 45px;
+            }
+
+
+            .phone-wrapper {
+
+                width: 300px;
+
+                right: -90px;
+
+                bottom: -45px;
+            }
+
+
+            .hero-title {
+
+                font-size: clamp(
+                    56px,
+                    6vw,
+                    76px
+                );
+            }
+
+
+            .hero-description {
+
+                max-width: 400px;
+            }
+        }
+
+
+        @media (max-width: 900px) {
+
+            .page {
+                padding: 0;
+            }
+
+
+            .login-card {
+
+                min-height: 100vh;
+
+                border-radius: 0;
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .brand-panel {
+
+                min-height: 560px;
+
+                padding:
+                    40px 45px;
+            }
+
+
+            .form-panel {
+
+                min-height: 650px;
+
+                padding:
+                    60px 45px;
+            }
+
+
+            .phone-wrapper {
+
+                width: 280px;
+
+                right: 5%;
+
+                bottom: -55px;
+            }
+        }
+
+
+        /* =========================================================
+           TABLET PEQUEÑA
+        ========================================================= */
+
+        @media (max-width: 700px) {
+
+            .brand-panel {
+
+                min-height: 510px;
+
+                padding:
+                    35px 30px;
+            }
+
+
+            .brand-logo {
+
+                margin-bottom: 48px;
+            }
+
+
+            .hero-title {
+
+                font-size: 62px;
+
+                letter-spacing: -2px;
+            }
+
+
+            .hero-description {
+
+                max-width: 350px;
+
+                font-size: 13px;
+            }
+
+
+            .features {
+
+                gap: 10px;
+            }
+
+
+            .feature-icon {
+
+                width: 36px;
+                height: 36px;
+
+                flex-basis: 36px;
+            }
+
+
+            .feature-text {
+                font-size: 12px;
+            }
+
+
+            .phone-wrapper {
+
+                width: 250px;
+
+                right: -30px;
+
+                bottom: -70px;
+            }
+
+
+            .brand-footer {
+
+                display: none;
+            }
+        }
+
+
+        /* =========================================================
+           MOVIL
+        ========================================================= */
+
+        @media (max-width: 560px) {
+
+            body {
+                background: white;
+            }
+
+
+            .login-card {
+
+                display: block;
+
+                min-height: 100vh;
+
+                box-shadow: none;
+            }
+
+
+            /* Ocultamos presentación para evitar saturar
+               la pantalla móvil */
+
+            .brand-panel {
+
+                display: none;
+            }
+
+
+            .form-panel {
+
+                width: 100%;
+
+                min-height: 100vh;
+
+                padding:
+                    32px 23px 35px;
+
+                align-items: flex-start;
+
+                justify-content: flex-start;
+            }
+
+
+            .form-container {
+
+                width: 100%;
+
+                max-width: 480px;
+
+                margin: 0 auto;
+
+                padding-top: 12px;
+            }
+
+
+            .form-logo {
+
+                margin-bottom: 58px;
+
+                gap: 12px;
+            }
+
+
+            .form-logo .logo-symbol {
+
+                width: 44px;
+                height: 44px;
+
+                flex-basis: 44px;
+            }
+
+
+            .form-logo-text {
+
+                font-size: 35px;
+            }
+
+
+            .form-logo-subtitle {
+
+                font-size: 8px;
+
+                letter-spacing: 3px;
+            }
+
+
+            .login-heading {
+
+                font-size: 47px;
+
+                letter-spacing: -1.3px;
+            }
+
+
+            .login-description {
+
+                font-size: 12px;
+
+                margin-bottom: 30px;
+            }
+
+
+            .field input {
+
+                height: 55px;
+
+                border-radius: 12px;
+            }
+
+
+            .login-button,
+            .google-button {
+
+                height: 55px;
+
+                border-radius: 12px;
+            }
+
+
+            .form-options {
+
+                align-items: flex-start;
+            }
+
+
+            .register {
+
+                margin-top: 38px;
+            }
+        }
+
+
+        /* =========================================================
+           MOVILES MUY PEQUEÑOS
+        ========================================================= */
+
+        @media (max-width: 370px) {
+
+            .form-panel {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+
+            .form-logo {
+                margin-bottom: 45px;
+            }
+
+
+            .form-logo-text {
+                font-size: 31px;
+            }
+
+
+            .login-heading {
+                font-size: 42px;
+            }
+
+
+            .login-description {
+                font-size: 11px;
+            }
+
+
+            .form-options {
+
+                flex-direction: column;
+
+                gap: 13px;
+            }
+
+
+            .forgot {
+                align-self: flex-end;
+            }
+        }
+
+
+        /* =========================================================
+           ALTURAS PEQUEÑAS
+        ========================================================= */
+
+        @media (max-height: 760px) and (min-width: 901px) {
+
+            .brand-logo {
+                margin-bottom: 35px;
+            }
+
+
+            .hero-description {
+                margin-bottom: 22px;
+            }
+
+
+            .features {
+                gap: 8px;
+            }
+
+
+            .feature {
+                min-height: 38px;
+            }
+
+
+            .feature-icon {
+                width: 35px;
+                height: 35px;
+                flex-basis: 35px;
+            }
+
+
+            .brand-footer {
+                display: none;
+            }
+
+
+            .phone-wrapper {
+                width: 310px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <main class="page">
+
+
+        <section class="login-card">
+
+
+            <!-- =====================================================
+                 PANEL DE PRESENTACIÓN
+            ====================================================== -->
+
+            <aside class="brand-panel">
+
+
+                <!-- LOGO -->
+
+                <div class="brand-logo">
+
+                    <svg
+                        class="logo-symbol"
+                        viewBox="0 0 80 80"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-label="MendoCash"
+                    >
+
+                        <defs>
+
+                            <linearGradient
+                                id="logoGradient"
+                                x1="10"
+                                y1="70"
+                                x2="70"
+                                y2="5"
+                                gradientUnits="userSpaceOnUse"
+                            >
+
+                                <stop
+                                    stop-color="#1DB892"
+                                />
+
+                                <stop
+                                    offset="1"
+                                    stop-color="#57E0BD"
+                                />
+
+                            </linearGradient>
+
+                        </defs>
+
+
+                        <path
+                            d="M18 61V22C18 16 25 13 29 18L40 32L54 10C58 4 68 7 68 14V61"
+                            stroke="url(#logoGradient)"
+                            stroke-width="13"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+
+                        <path
+                            d="M47 18H66V37"
+                            stroke="#C7F8EB"
+                            stroke-width="6"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+
+                    <div>
+
+                        <div class="brand-name">
+                            Mendo<span>Cash</span>
+                        </div>
+
+                        <div class="brand-tagline">
+                            TUS FINANZAS, BAJO CONTROL
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONTENIDO -->
+
+                <div class="brand-content">
+
+
+                    <h1 class="hero-title">
+
+                        Organiza hoy
+
+                        <span class="accent">
+                            el mañana
+                        </span>
+
+                        <span class="last">
+                            que quieres
+                        </span>
+
+                    </h1>
+
+
+                    <p class="hero-description">
+
+                        Gestiona tus gastos, ingresos, cuentas,
+                        préstamos y mucho más, todo en un solo lugar.
+                        Simple, seguro y siempre contigo.
+
+                    </p>
+
+
+                    <div class="features">
+
+
+                        <div class="feature">
+
+                            <div class="feature-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                >
+
+                                    <path
+                                        d="M12 3v18"
+                                    />
+
+                                    <path
+                                        d="M16 7.5c0-1.5-1.7-2.5-4-2.5s-4 1-4 2.7c0 4.2 8 2.1 8 6.5 0 1.7-1.8 2.8-4 2.8s-4-1.1-4-2.7"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                            <span class="feature-text">
+                                Control de gastos
+                            </span>
+
+                        </div>
+
+
+                        <div class="feature">
+
+                            <div class="feature-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                >
+
+                                    <rect
+                                        x="4"
+                                        y="4"
+                                        width="16"
+                                        height="16"
+                                        rx="2"
+                                    />
+
+                                    <path
+                                        d="M8 9h8M8 13h5M8 17h3"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                            <span class="feature-text">
+                                Presupuestos
+                            </span>
+
+                        </div>
+
+
+                        <div class="feature">
+
+                            <div class="feature-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                >
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="8"
+                                    />
+
+                                    <path
+                                        d="M12 8v8M9 12h6"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                            <span class="feature-text">
+                                Préstamos y deudas
+                            </span>
+
+                        </div>
+
+
+                        <div class="feature">
+
+                            <div class="feature-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                >
+
+                                    <circle
+                                        cx="12"
+                                        cy="8"
+                                        r="3"
+                                    />
+
+                                    <path
+                                        d="M5 20c0-3 3-5 7-5s7 2 7 5"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                            <span class="feature-text">
+                                Múltiples perfiles
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- TELEFONO -->
+
+                <div class="phone-wrapper">
+
+                    <div class="phone">
+
+                        <div class="phone-screen">
+
+                            <div class="phone-notch"></div>
+
+                            <div class="phone-time">
+                                9:41
+                            </div>
+
+                            <div class="phone-greeting">
+                                Hola,
+                            </div>
+
+                            <div class="phone-user">
+                                Usuario
+                            </div>
+
+
+                            <div class="phone-balance">
+
+                                <div class="balance-label">
+                                    Saldo total
+                                </div>
+
+                                <div class="balance-value">
+                                    $2.450.000
+                                </div>
+
+                            </div>
+
+
+                            <div class="phone-summary">
+
+                                <div class="summary-row">
+
+                                    <span>
+                                        Ingresos
+                                    </span>
+
+                                    <span class="summary-value green">
+                                        $3.200.000
+                                    </span>
+
+                                </div>
+
+
+                                <div class="summary-row">
+
+                                    <span>
+                                        Gastos
+                                    </span>
+
+                                    <span class="summary-value red">
+                                        $1.250.000
+                                    </span>
+
+                                </div>
+
+
+                                <div class="summary-row">
+
+                                    <span>
+                                        Ahorro
+                                    </span>
+
+                                    <span class="summary-value blue">
+                                        $500.000
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="phone-section">
+
+                                <span>
+                                    Últimos movimientos
+                                </span>
+
+                                <span>
+                                    Ver todos
+                                </span>
+
+                            </div>
+
+
+                            <div class="phone-movements">
+
+
+                                <div class="movement">
+
+                                    <span class="movement-name">
+                                        Supermercado
+                                    </span>
+
+                                    <span class="movement-value red">
+                                        -$85.500
+                                    </span>
+
+                                </div>
+
+
+                                <div class="movement">
+
+                                    <span class="movement-name">
+                                        Salario
+                                    </span>
+
+                                    <span class="movement-value green">
+                                        +$1.200.000
+                                    </span>
+
+                                </div>
+
+
+                                <div class="movement">
+
+                                    <span class="movement-name">
+                                        Transporte
+                                    </span>
+
+                                    <span class="movement-value red">
+                                        -$45.000
+                                    </span>
+
+                                </div>
+
+
+                                <div class="movement">
+
+                                    <span class="movement-name">
+                                        Alimentación
+                                    </span>
+
+                                    <span class="movement-value red">
+                                        -$62.000
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="phone-bottom">
+
+                                <span>
+                                    Inicio
+                                </span>
+
+                                <span>
+                                    Categorías
+                                </span>
+
+                                <div class="phone-plus">
+                                    +
+                                </div>
+
+                                <span>
+                                    Reportes
+                                </span>
+
+                                <span>
+                                    Más
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FRASE -->
+
+                <div class="brand-footer">
+
+                    Tu vida financiera,
+                    <br>
+                    más simple.
+
+                </div>
+
+
+            </aside>
+
+
+            <!-- =====================================================
+                 PANEL LOGIN
+            ====================================================== -->
+
+            <section class="form-panel">
+
+
+                <div class="form-container">
+
+
+                    <!-- LOGO -->
+
+                    <div class="form-logo">
+
+
+                        <svg
+                            class="logo-symbol"
+                            viewBox="0 0 80 80"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+
+                            <defs>
+
+                                <linearGradient
+                                    id="logoGradientRight"
+                                    x1="10"
+                                    y1="70"
+                                    x2="70"
+                                    y2="5"
+                                    gradientUnits="userSpaceOnUse"
+                                >
+
+                                    <stop
+                                        stop-color="#168D73"
+                                    />
+
+                                    <stop
+                                        offset="1"
+                                        stop-color="#22B995"
+                                    />
+
+                                </linearGradient>
+
+                            </defs>
+
+
+                            <path
+                                d="M18 61V22C18 16 25 13 29 18L40 32L54 10C58 4 68 7 68 14V61"
+                                stroke="url(#logoGradientRight)"
+                                stroke-width="13"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+
+                            <path
+                                d="M47 18H66V37"
+                                stroke="#087B68"
+                                stroke-width="6"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                        </svg>
+
+
+                        <div>
+
+                            <div class="form-logo-text">
+                                Mendo<span>Cash</span>
+                            </div>
+
+                            <div class="form-logo-subtitle">
+                                PERSONAL FINANCE
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TITULO -->
+
+                    <h2 class="login-heading">
+                        ¡Bienvenido de nuevo!
+                    </h2>
+
+
+                    <p class="login-description">
+                        Inicia sesión para continuar con tu gestión financiera.
+                    </p>
+
+
+                    <!-- FORMULARIO -->
+
+                    <form
+                        class="login-form"
+                        id="loginForm"
+                    >
+
+
+                        <!-- EMAIL -->
+
+                        <div class="field">
+
+                            <svg
+                                class="field-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                            >
+
+                                <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="14"
+                                    rx="2"
+                                />
+
+                                <path
+                                    d="m3 7 9 6 9-6"
+                                />
+
+                            </svg>
+
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Correo electrónico"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="field">
+
+                            <svg
+                                class="field-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                            >
+
+                                <rect
+                                    x="5"
+                                    y="10"
+                                    width="14"
+                                    height="10"
+                                    rx="2"
+                                />
+
+                                <path
+                                    d="M8 10V7a4 4 0 0 1 8 0v3"
+                                />
+
+                                <circle
+                                    cx="12"
+                                    cy="15"
+                                    r="1"
+                                />
+
+                            </svg>
+
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Contraseña"
+                                autocomplete="current-password"
+                                required
+                            >
+
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="passwordToggle"
+                                aria-label="Mostrar contraseña"
+                            >
+
+                                <svg
+                                    id="eyeClosed"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.6"
+                                >
+
+                                    <path
+                                        d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"
+                                    />
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="2.5"
+                                    />
+
+                                </svg>
+
+
+                                <svg
+                                    id="eyeOpen"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.6"
+                                    style="display:none;"
+                                >
+
+                                    <path
+                                        d="M3 3l18 18"
+                                    />
+
+                                    <path
+                                        d="M10.5 6.3A9.7 9.7 0 0 1 12 6c6.5 0 10 6 10 6a17 17 0 0 1-3.2 3.8"
+                                    />
+
+                                    <path
+                                        d="M6.2 6.8C3.5 8.8 2 12 2 12s3.5 6 10 6c1.5 0 2.8-.3 4-.8"
+                                    />
+
+                                    <path
+                                        d="M9.9 9.9a3 3 0 0 0 4.2 4.2"
+                                    />
+
+                                </svg>
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- OPCIONES -->
+
+                        <div class="form-options">
+
+
+                            <label class="remember">
+
+                                <input
+                                    type="checkbox"
+                                    id="remember"
+                                    name="remember"
+                                >
+
+                                <span>
+                                    Recordarme
+                                </span>
+
+                            </label>
+
+
+                            <a
+                                href="#"
+                                class="forgot"
+                                id="forgotPassword"
+                            >
+                                ¿Olvidaste tu contraseña?
+                            </a>
+
+
+                        </div>
+
+
+                        <!-- LOGIN -->
+
+                        <button
+                            type="submit"
+                            class="login-button"
+                            id="loginButton"
+                        >
+
+                            <span class="button-text">
+                                Iniciar sesión
+                            </span>
+
+
+                            <span class="spinner"></span>
+
+
+                            <svg
+                                class="arrow"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <path
+                                    d="M5 12h13"
+                                />
+
+                                <path
+                                    d="m13 6 6 6-6 6"
+                                />
+
+                            </svg>
+
+                        </button>
+
+
+                        <!-- SEPARADOR -->
+
+                        <div class="separator">
+                            <span>o</span>
+                        </div>
+
+
+                        <!-- GOOGLE -->
+
+                        <button
+                            type="button"
+                            class="google-button"
+                            id="googleButton"
+                        >
+
+                            <svg
+                                class="google-icon"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+
+                                <path
+                                    fill="#4285F4"
+                                    d="M21.35 12.27c0-.72-.06-1.42-.18-2.09H12v3.95h5.23a4.47 4.47 0 0 1-1.94 2.94v2.45h3.14c1.84-1.7 2.92-4.2 2.92-7.25z"
+                                />
+
+                                <path
+                                    fill="#34A853"
+                                    d="M12 21.5c2.63 0 4.84-.87 6.45-2.36l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.69-1.72-5.46-4.03H3.3v2.53A9.74 9.74 0 0 0 12 21.5z"
+                                />
+
+                                <path
+                                    fill="#FBBC05"
+                                    d="M6.54 13.58A5.86 5.86 0 0 1 6.23 12c0-.55.1-1.09.31-1.58V7.89H3.3A9.5 9.5 0 0 0 2.25 12c0 1.48.36 2.88 1.05 4.11l3.24-2.53z"
+                                />
+
+                                <path
+                                    fill="#EA4335"
+                                    d="M12 6.39c1.43 0 2.71.49 3.72 1.46l2.79-2.79C16.83 3.5 14.63 2.5 12 2.5a9.74 9.74 0 0 0-8.7 5.39l3.24 2.53C7.31 8.11 9.46 6.39 12 6.39z"
+                                />
+
+                            </svg>
+
+
+                            <span>
+                                Continuar con Google
+                            </span>
+
+                        </button>
+
+
+                    </form>
+
+
+                    <!-- FORMULARIO REGISTRO -->
+
+                    <form
+                        class="login-form"
+                        id="registerForm"
+                        style="display:none;"
+                    >
+
+                        <div class="field">
+
+                            <svg
+                                class="field-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                            >
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4"
+                                />
+
+                                <path
+                                    d="M4 21c0-4 4-6 8-6s8 2 8 6"
+                                />
+
+                            </svg>
+
+                            <input
+                                type="text"
+                                id="regName"
+                                name="full_name"
+                                placeholder="Nombre completo"
+                                autocomplete="name"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="field">
+
+                            <svg
+                                class="field-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                            >
+
+                                <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="14"
+                                    rx="2"
+                                />
+
+                                <path
+                                    d="m3 7 9 6 9-6"
+                                />
+
+                            </svg>
+
+                            <input
+                                type="email"
+                                id="regEmail"
+                                name="email"
+                                placeholder="Correo electrónico"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="field">
+
+                            <svg
+                                class="field-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                            >
+
+                                <rect
+                                    x="5"
+                                    y="10"
+                                    width="14"
+                                    height="10"
+                                    rx="2"
+                                />
+
+                                <path
+                                    d="M8 10V7a4 4 0 0 1 8 0v3"
+                                />
+
+                            </svg>
+
+                            <input
+                                type="password"
+                                id="regPassword"
+                                name="password"
+                                placeholder="Contraseña (mín. 8 caracteres)"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="login-button"
+                            id="registerButton"
+                        >
+
+                            <span class="button-text">
+                                Crear cuenta
+                            </span>
+
+                            <span class="spinner"></span>
+
+                            <svg
+                                class="arrow"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <path
+                                    d="M5 12h13"
+                                />
+
+                                <path
+                                    d="m13 6 6 6-6 6"
+                                />
+
+                            </svg>
+
+                        </button>
+
+                        <div class="form-options" style="justify-content:center;">
+
+                            <a
+                                href="#"
+                                class="forgot"
+                                id="backToLoginFromRegister"
+                            >
+                                ← Volver al inicio de sesión
+                            </a>
+
+                        </div>
+
+                    </form>
+
+
+                    <!-- FORMULARIO RECUPERAR CONTRASEÑA -->
+
+                    <form
+                        class="login-form"
+                        id="forgotForm"
+                        style="display:none;"
+                    >
+
+                        <div class="field">
+
+                            <svg
+                                class="field-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                            >
+
+                                <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="14"
+                                    rx="2"
+                                />
+
+                                <path
+                                    d="m3 7 9 6 9-6"
+                                />
+
+                            </svg>
+
+                            <input
+                                type="email"
+                                id="forgotEmail"
+                                name="email"
+                                placeholder="Correo electrónico"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="login-button"
+                            id="forgotButton"
+                        >
+
+                            <span class="button-text">
+                                Enviar
+                            </span>
+
+                            <span class="spinner"></span>
+
+                            <svg
+                                class="arrow"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <path
+                                    d="M5 12h13"
+                                />
+
+                                <path
+                                    d="m13 6 6 6-6 6"
+                                />
+
+                            </svg>
+
+                        </button>
+
+                        <div
+                            id="resetSection"
+                            style="display:none;"
+                        >
+
+                            <div class="field">
+
+                                <svg
+                                    class="field-icon"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.6"
+                                >
+
+                                    <rect
+                                        x="5"
+                                        y="10"
+                                        width="14"
+                                        height="10"
+                                        rx="2"
+                                    />
+
+                                    <path
+                                        d="M8 10V7a4 4 0 0 1 8 0v3"
+                                    />
+
+                                </svg>
+
+                                <input
+                                    type="text"
+                                    id="resetToken"
+                                    placeholder="Token de recuperación"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="field">
+
+                                <svg
+                                    class="field-icon"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.6"
+                                >
+
+                                    <rect
+                                        x="5"
+                                        y="10"
+                                        width="14"
+                                        height="10"
+                                        rx="2"
+                                    />
+
+                                    <path
+                                        d="M8 10V7a4 4 0 0 1 8 0v3"
+                                    />
+
+                                </svg>
+
+                                <input
+                                    type="password"
+                                    id="resetPassword"
+                                    placeholder="Nueva contraseña"
+                                    minlength="8"
+                                    required
+                                >
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="login-button"
+                                id="resetButton"
+                            >
+
+                                <span class="button-text">
+                                    Restablecer contraseña
+                                </span>
+
+                                <span class="spinner"></span>
+
+                                <svg
+                                    class="arrow"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+
+                                    <path
+                                        d="M5 12h13"
+                                    />
+
+                                    <path
+                                        d="m13 6 6 6-6 6"
+                                    />
+
+                                </svg>
+
+                            </button>
+
+                        </div>
+
+                        <div class="form-options" style="justify-content:center;">
+
+                            <a
+                                href="#"
+                                class="forgot"
+                                id="backToLoginFromForgot"
+                            >
+                                ← Volver al inicio de sesión
+                            </a>
+
+                        </div>
+
+                    </form>
+
+
+                    <!-- REGISTRO -->
+
+                    <div class="register">
+
+                        ¿No tienes una cuenta?
+
+                        <a
+                            href="#"
+                            id="registerLink"
+                        >
+                            Regístrate
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        /* =========================================================
+           ELEMENTOS
+        ========================================================= */
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const passwordToggle =
+            document.getElementById("passwordToggle");
+
+        const eyeClosed =
+            document.getElementById("eyeClosed");
+
+        const eyeOpen =
+            document.getElementById("eyeOpen");
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const loginButton =
+            document.getElementById("loginButton");
+
+        const buttonText =
+            loginButton.querySelector(".button-text");
+
+
+        /* =========================================================
+           CONFIGURACIÓN DEL BACKEND
+        ========================================================= */
+
+        const BACKEND_URL =
+            "";
+
+        const GOOGLE_CLIENT_ID =
+            "%VITE_GOOGLE_CLIENT_ID%";
+
+
+        /* =========================================================
+           MENSAJES DE ERROR
+        ========================================================= */
+
+        function showError(message) {
+
+            let el =
+                document.getElementById("errorMessage");
+
+            if (!el) {
+
+                el = document.createElement("div");
+
+                el.id = "errorMessage";
+
+                el.style.cssText =
+                    "color:#b3261e;background:#fdecea;" +
+                    "border:1px solid #f5c6cb;border-radius:12px;" +
+                    "padding:12px 16px;font-size:13px;" +
+                    "margin-bottom:16px;text-align:left;display:none;";
+
+                loginForm.parentNode.insertBefore(
+                    el,
+                    loginForm
+                );
+
+            }
+
+            el.textContent = message;
+
+            el.style.display = "block";
+
+        }
+
+
+        function clearError() {
+
+            const el =
+                document.getElementById("errorMessage");
+
+            if (el) {
+                el.style.display = "none";
+            }
+
+        }
+
+
+        function loadGoogleScript() {
+
+            return new Promise(
+                function (resolve) {
+
+                    if (window.google && window.google.accounts) {
+                        return resolve();
+                    }
+
+                    const s = document.createElement("script");
+
+                    s.src =
+                        "https://accounts.google.com/gsi/client";
+
+                    s.async = true;
+
+                    s.defer = true;
+
+                    s.onload = resolve;
+
+                    s.onerror = resolve;
+
+                    document.head.appendChild(s);
+
+                }
+            );
+
+        }
+
+
+        /* =========================================================
+           MOSTRAR / OCULTAR CONTRASEÑA
+        ========================================================= */
+
+        passwordToggle.addEventListener(
+            "click",
+            function () {
+
+                const isPassword =
+                    passwordInput.type === "password";
+
+
+                passwordInput.type =
+                    isPassword
+                        ? "text"
+                        : "password";
+
+
+                eyeClosed.style.display =
+                    isPassword
+                        ? "none"
+                        : "block";
+
+
+                eyeOpen.style.display =
+                    isPassword
+                        ? "block"
+                        : "none";
+
+
+                passwordToggle.setAttribute(
+                    "aria-label",
+                    isPassword
+                        ? "Ocultar contraseña"
+                        : "Mostrar contraseña"
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           LOGIN
+        ========================================================= */
+
+        loginForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                clearError();
+
+
+                if (!loginForm.checkValidity()) {
+
+                    loginForm.reportValidity();
+
+                    return;
+                }
+
+
+                loginButton.classList.add("loading");
+
+                buttonText.textContent =
+                    "Verificando...";
+
+
+                fetch(BACKEND_URL + "/api/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email:
+                            document.getElementById("email").value,
+                        password:
+                            document.getElementById("password").value
+                    })
+                })
+                    .then(function (res) {
+                        return res.json().then(function (data) {
+                            return { ok: res.ok, data: data };
+                        });
+                    })
+                    .then(function (result) {
+
+                        if (!result.ok) {
+                            throw new Error(
+                                result.data.message ||
+                                "Credenciales inválidas."
+                            );
+                        }
+
+                        localStorage.setItem(
+                            "finanzas_token",
+                            result.data.token
+                        );
+
+                        localStorage.setItem(
+                            "finanzas_user",
+                            JSON.stringify(result.data.user)
+                        );
+
+                        window.location.href = "/app.html";
+
+                    })
+                    .catch(function (err) {
+
+                        showError(
+                            err.message ||
+                            "No se pudo conectar con el servidor."
+                        );
+
+                        loginButton.classList.remove("loading");
+
+                        buttonText.textContent =
+                            "Iniciar sesión";
+
+                    });
+
+            }
+        );
+
+
+        /* =========================================================
+           GOOGLE
+        ========================================================= */
+
+        document
+            .getElementById("googleButton")
+            .addEventListener(
+                "click",
+                function () {
+
+                    clearError();
+
+                    if (
+                        !GOOGLE_CLIENT_ID ||
+                        GOOGLE_CLIENT_ID.indexOf("TU_CLIENT_ID") === 0
+                    ) {
+
+                        showError(
+                            "Configura el Client ID de Google " +
+                            "(VITE_GOOGLE_CLIENT_ID) en Google Cloud Console."
+                        );
+
+                        return;
+                    }
+
+
+                    loadGoogleScript()
+                        .then(function () {
+
+                            if (!window.google || !window.google.accounts) {
+                                throw new Error(
+                                    "No se pudo cargar Google. Revisa tu conexión."
+                                );
+                            }
+
+
+                            window.google.accounts.id.initialize({
+                                client_id: GOOGLE_CLIENT_ID,
+                                callback: handleGoogleCredential
+                            });
+
+
+                            window.google.accounts.id.prompt();
+
+                        })
+                        .catch(function (err) {
+
+                            showError(err.message);
+
+                        });
+
+                }
+            );
+
+
+        function handleGoogleCredential(response) {
+
+            fetch(BACKEND_URL + "/api/auth/google", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    credential: response.credential
+                })
+            })
+                .then(function (res) {
+                    return res.json().then(function (data) {
+                        return { ok: res.ok, data: data };
+                    });
+                })
+                .then(function (result) {
+
+                    if (!result.ok) {
+                        throw new Error(
+                            result.data.message ||
+                            "No se pudo verificar con Google."
+                        );
+                    }
+
+                    localStorage.setItem(
+                        "finanzas_token",
+                        result.data.token
+                    );
+
+                    localStorage.setItem(
+                        "finanzas_user",
+                        JSON.stringify(result.data.user)
+                    );
+
+                    window.location.href = "/app.html";
+
+                })
+                .catch(function (err) {
+
+                    showError(
+                        err.message || "Error con Google."
+                    );
+
+                });
+
+        }
+
+
+        /* =========================================================
+           CAMBIO DE FORMULARIOS
+        ========================================================= */
+
+        const registerForm =
+            document.getElementById("registerForm");
+
+        const forgotForm =
+            document.getElementById("forgotForm");
+
+        const headingEl =
+            document.querySelector(".login-heading");
+
+        const descriptionEl =
+            document.querySelector(".login-description");
+
+        const registerBox =
+            document.querySelector(".register");
+
+
+        function showLogin() {
+
+            clearError();
+
+            loginForm.style.display = "";
+            registerForm.style.display = "none";
+            forgotForm.style.display = "none";
+            registerBox.style.display = "";
+
+            headingEl.textContent =
+                "¡Bienvenido de nuevo!";
+
+            descriptionEl.textContent =
+                "Inicia sesión para continuar con tu gestión financiera.";
+
+        }
+
+
+        function showRegister() {
+
+            clearError();
+
+            loginForm.style.display = "none";
+            registerForm.style.display = "";
+            forgotForm.style.display = "none";
+            registerBox.style.display = "none";
+
+            headingEl.textContent =
+                "Crear una cuenta";
+
+            descriptionEl.textContent =
+                "Regístrate para empezar a gestionar tus finanzas.";
+
+        }
+
+
+        function showForgot() {
+
+            clearError();
+
+            loginForm.style.display = "none";
+            registerForm.style.display = "none";
+            forgotForm.style.display = "";
+            registerBox.style.display = "none";
+
+            headingEl.textContent =
+                "Recuperar contraseña";
+
+            descriptionEl.textContent =
+                "Ingresa tu correo y te enviaremos un token de recuperación.";
+
+        }
+
+
+        document
+            .getElementById("forgotPassword")
+            .addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    showForgot();
+
+                }
+            );
+
+
+        document
+            .getElementById("registerLink")
+            .addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    showRegister();
+
+                }
+            );
+
+
+        document
+            .getElementById("backToLoginFromRegister")
+            .addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    showLogin();
+
+                }
+            );
+
+
+        document
+            .getElementById("backToLoginFromForgot")
+            .addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    showLogin();
+
+                }
+            );
+
+
+        /* =========================================================
+           REGISTRO
+        ========================================================= */
+
+        const registerButton =
+            document.getElementById("registerButton");
+
+        const registerButtonText =
+            registerButton.querySelector(".button-text");
+
+
+        registerForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                clearError();
+
+
+                if (!registerForm.checkValidity()) {
+
+                    registerForm.reportValidity();
+
+                    return;
+                }
+
+
+                registerButton.classList.add("loading");
+
+                registerButtonText.textContent =
+                    "Creando cuenta...";
+
+
+                fetch(BACKEND_URL + "/api/auth/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        full_name:
+                            document.getElementById("regName").value,
+                        email:
+                            document.getElementById("regEmail").value,
+                        password:
+                            document.getElementById("regPassword").value
+                    })
+                })
+                    .then(function (res) {
+                        return res.json().then(function (data) {
+                            return { ok: res.ok, data: data };
+                        });
+                    })
+                    .then(function (result) {
+
+                        if (!result.ok) {
+                            throw new Error(
+                                result.data.message ||
+                                "No se pudo crear la cuenta."
+                            );
+                        }
+
+                        localStorage.setItem(
+                            "finanzas_token",
+                            result.data.token
+                        );
+
+                        localStorage.setItem(
+                            "finanzas_user",
+                            JSON.stringify(result.data.user)
+                        );
+
+                        window.location.href = "/app.html";
+
+                    })
+                    .catch(function (err) {
+
+                        showError(
+                            err.message || "Error al crear la cuenta."
+                        );
+
+                        registerButton.classList.remove("loading");
+
+                        registerButtonText.textContent =
+                            "Crear cuenta";
+
+                    });
+
+            }
+        );
+
+
+        /* =========================================================
+           RECUPERAR CONTRASEÑA
+        ========================================================= */
+
+        const forgotButton =
+            document.getElementById("forgotButton");
+
+        const forgotButtonText =
+            forgotButton.querySelector(".button-text");
+
+        const resetButton =
+            document.getElementById("resetButton");
+
+        const resetButtonText =
+            resetButton.querySelector(".button-text");
+
+        const resetSection =
+            document.getElementById("resetSection");
+
+
+        forgotForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                clearError();
+
+
+                const forgotEmail =
+                    document.getElementById("forgotEmail");
+
+                if (!forgotEmail.checkValidity()) {
+
+                    forgotEmail.reportValidity();
+
+                    return;
+                }
+
+
+                forgotButton.classList.add("loading");
+
+                forgotButtonText.textContent =
+                    "Enviando...";
+
+
+                fetch(BACKEND_URL + "/api/auth/forgot-password", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email: forgotEmail.value
+                    })
+                })
+                    .then(function (res) {
+                        return res.json().then(function (data) {
+                            return { ok: res.ok, data: data };
+                        });
+                    })
+                    .then(function (result) {
+
+                        forgotButton.classList.remove("loading");
+
+                        forgotButtonText.textContent =
+                            "Enviar";
+
+
+                        if (!result.ok) {
+                            throw new Error(
+                                result.data.message ||
+                                "No se pudo enviar."
+                            );
+                        }
+
+
+                        if (result.data.reset_token) {
+
+                            document.getElementById("resetToken").value =
+                                result.data.reset_token;
+
+                        }
+
+                        resetSection.style.display = "";
+
+                    })
+                    .catch(function (err) {
+
+                        showError(err.message);
+
+                        forgotButton.classList.remove("loading");
+
+                        forgotButtonText.textContent =
+                            "Enviar";
+
+                    });
+
+            }
+        );
+
+
+        resetButton.addEventListener(
+            "click",
+            function () {
+
+                clearError();
+
+
+                resetButton.classList.add("loading");
+
+                resetButtonText.textContent =
+                    "Restableciendo...";
+
+
+                fetch(BACKEND_URL + "/api/auth/reset-password", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        token:
+                            document.getElementById("resetToken").value,
+                        new_password:
+                            document.getElementById("resetPassword").value
+                    })
+                })
+                    .then(function (res) {
+                        return res.json().then(function (data) {
+                            return { ok: res.ok, data: data };
+                        });
+                    })
+                    .then(function (result) {
+
+                        resetButton.classList.remove("loading");
+
+                        resetButtonText.textContent =
+                            "Restablecer contraseña";
+
+
+                        if (!result.ok) {
+                            throw new Error(
+                                result.data.message ||
+                                "No se pudo restablecer."
+                            );
+                        }
+
+
+                        resetSection.style.display = "none";
+
+                        showError(
+                            "Contraseña restablecida. Inicia sesión con tu nueva contraseña."
+                        );
+
+                        setTimeout(showLogin, 2500);
+
+                    })
+                    .catch(function (err) {
+
+                        showError(err.message);
+
+                        resetButton.classList.remove("loading");
+
+                        resetButtonText.textContent =
+                            "Restablecer contraseña";
+
+                    });
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
