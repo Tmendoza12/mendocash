@@ -3573,6 +3573,14 @@
                             document.getElementById("resetToken").value =
                                 result.data.reset_token;
 
+                        } else {
+
+                            showError(
+                                "Revisa tu correo: te enviamos un código " +
+                                "para restablecer la contraseña. Pégalo abajo " +
+                                "junto con tu nueva contraseña."
+                            );
+
                         }
 
                         resetSection.style.display = "";

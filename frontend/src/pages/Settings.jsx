@@ -35,7 +35,10 @@ export default function Settings() {
     try {
       await api.put('/settings', { settings: defaults });
       setSettings((s) => ({ ...s, ...defaults }));
-      toast.success('Configuración restablecida a valores de fábrica.');
+      localStorage.removeItem('mendocash_collapsed');
+      localStorage.removeItem('finanzas_theme');
+      toast.success('Dashboard restablecido a valores de fábrica.');
+      setTimeout(() => window.location.reload(), 800);
     } catch (err) { toast.error(apiErrorMessage(err)); } finally { setSaving(false); }
   };
 

@@ -6,6 +6,7 @@ import { signToken } from '../utils/jwt.js';
 import { asyncHandler, getIp } from '../utils/helpers.js';
 import { logAudit } from '../services/audit.js';
 import { env } from '../config/env.js';
+import { isMailConfigured, sendPasswordResetEmail } from '../services/mail.js';
 
 function userPayload(user, permissions, roles) {
   return {
@@ -217,17 +218,28 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   const { rows } = await query('SELECT * FROM users WHERE email = $1', [email]);
   const user = rows[0];
   if (!user) {
-    return res.status(200).json({ message: 'Si el correo existe, se enviarán instrucciones.' });
+    return res.status(200).json({ message: 'Si el correo existe, se enviarán las instrucciones.' });
   }
   const token = crypto.randomBytes(32).toString('hex');
   await query(
     `INSERT INTO password_resets (user_id, token, expires_at) VALUES ($1, $2, now() + interval '1 hour')`,
     [user.id, token]
   );
-  // En producción este token se enviaría por correo electrónico.
+
+  if (isMailConfigured()) {
+    try {
+      await sendPasswordResetEmail(email, token);
+    } catch (err) {
+      console.error('No se pudo enviar el correo:', err.message);
+    }
+  }
+
+  // En desarrollo (sin SMTP configurado) se devuelve el token para facilitar las pruebas.
   res.json({
-    message: 'Token de recuperación generado.',
-    reset_token: token,
+    message: isMailConfigured()
+      ? 'Se envió un correo con las instrucciones para restablecer tu contraseña.'
+      : 'Se generó el token de recuperación (SMTP no configurado).',
+    reset_token: isMailConfigured() ? undefined : token,
   });
 });
 
