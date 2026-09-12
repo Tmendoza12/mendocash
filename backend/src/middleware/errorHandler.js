@@ -17,9 +17,10 @@ export function notFoundHandler(req, res) {
 
 // eslint-disable-next-line no-unused-vars
 export function errorHandler(err, req, res, next) {
-  console.error('Error:', err.message);
   const status = err.status || 500;
-  res.status(status).json({
-    message: err.expose ? err.message : 'Error interno del servidor.',
-  });
+  if (status >= 500) {
+    console.error('Error:', err.message);
+    return res.status(status).json({ message: 'Error interno del servidor.' });
+  }
+  res.status(status).json({ message: err.message || 'Error en la solicitud.' });
 }
