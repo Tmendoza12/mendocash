@@ -2800,8 +2800,7 @@
                                 <input
                                     type="text"
                                     id="resetToken"
-                                    placeholder="Token de recuperación"
-                                    required
+                                    placeholder="Código de recuperación"
                                 >
 
                             </div>
@@ -2835,7 +2834,6 @@
                                     id="resetPassword"
                                     placeholder="Nueva contraseña"
                                     minlength="8"
-                                    required
                                 >
 
                             </div>
@@ -2957,7 +2955,7 @@
            MENSAJES DE ERROR
         ========================================================= */
 
-        function showError(message) {
+        function showMessage(message, type) {
 
             let el =
                 document.getElementById("errorMessage");
@@ -2969,10 +2967,9 @@
                 el.id = "errorMessage";
 
                 el.style.cssText =
-                    "color:#b3261e;background:#fdecea;" +
-                    "border:1px solid #f5c6cb;border-radius:12px;" +
-                    "padding:12px 16px;font-size:13px;" +
-                    "margin-bottom:16px;text-align:left;display:none;";
+                    "border-radius:12px;padding:12px 16px;" +
+                    "font-size:13px;margin-bottom:16px;" +
+                    "text-align:left;display:none;";
 
                 loginForm.parentNode.insertBefore(
                     el,
@@ -2981,10 +2978,31 @@
 
             }
 
+            const styles = {
+                error:
+                    "color:#b3261e;background:#fdecea;" +
+                    "border:1px solid #f5c6cb;",
+                success:
+                    "color:#0b7a50;background:#e6f7ee;" +
+                    "border:1px solid #b8e6cf;"
+            };
+
+            el.style.cssText =
+                "border-radius:12px;padding:12px 16px;" +
+                "font-size:13px;margin-bottom:16px;" +
+                "text-align:left;display:block;" +
+                (styles[type] || styles.error);
+
             el.textContent = message;
 
-            el.style.display = "block";
+        }
 
+        function showError(message) {
+            showMessage(message, "error");
+        }
+
+        function showSuccess(message) {
+            showMessage(message, "success");
         }
 
 
@@ -3335,11 +3353,13 @@
             forgotForm.style.display = "";
             registerBox.style.display = "none";
 
+            document.getElementById("resetSection").style.display = "none";
+
             headingEl.textContent =
                 "Recuperar contraseña";
 
             descriptionEl.textContent =
-                "Ingresa tu correo y te enviaremos un token de recuperación.";
+                "Ingresa tu correo y te enviaremos un código de recuperación.";
 
         }
 
@@ -3575,10 +3595,10 @@
 
                         } else {
 
-                            showError(
-                                "Revisa tu correo: te enviamos un código " +
-                                "para restablecer la contraseña. Pégalo abajo " +
-                                "junto con tu nueva contraseña."
+                            showSuccess(
+                                "Te enviamos un código de recuperación a tu " +
+                                "correo. Pégalo abajo junto con tu nueva " +
+                                "contraseña para restablecerla."
                             );
 
                         }
@@ -3608,6 +3628,28 @@
                 clearError();
 
 
+                const resetToken =
+                    document.getElementById("resetToken").value.trim();
+
+                const resetPassword =
+                    document.getElementById("resetPassword").value;
+
+
+                if (!resetToken) {
+                    showError(
+                        "Pega el código de recuperación que recibiste por correo."
+                    );
+                    return;
+                }
+
+                if (resetPassword.length < 8) {
+                    showError(
+                        "La nueva contraseña debe tener al menos 8 caracteres."
+                    );
+                    return;
+                }
+
+
                 resetButton.classList.add("loading");
 
                 resetButtonText.textContent =
@@ -3620,10 +3662,8 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        token:
-                            document.getElementById("resetToken").value,
-                        new_password:
-                            document.getElementById("resetPassword").value
+                        token: resetToken,
+                        new_password: resetPassword
                     })
                 })
                     .then(function (res) {
@@ -3649,7 +3689,7 @@
 
                         resetSection.style.display = "none";
 
-                        showError(
+                        showSuccess(
                             "Contraseña restablecida. Inicia sesión con tu nueva contraseña."
                         );
 
