@@ -38,17 +38,28 @@ export function Textarea({ label, required, error, ...props }) {
 }
 
 export function MoneyInput({ label, required, error, value, onChange, ...props }) {
+  const format = (v) => {
+    if (v === '' || v == null) return '';
+    const num = Number(v);
+    if (isNaN(num)) return String(v);
+    return num.toLocaleString('es-CO', { maximumFractionDigits: 2 });
+  };
+
+  const handleChange = (e) => {
+    const raw = e.target.value.replace(/[^0-9.,]/g, '').replace(/\./g, '').replace(',', '.');
+    onChange({ target: { value: raw } });
+  };
+
   return (
     <Field label={label} required={required} error={error}>
       <div className="relative">
         <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-400">$</span>
         <input
-          type="number"
-          step="0.01"
-          min="0"
+          type="text"
+          inputMode="decimal"
           className="input pl-7"
-          value={value}
-          onChange={onChange}
+          value={format(value)}
+          onChange={handleChange}
           {...props}
         />
       </div>

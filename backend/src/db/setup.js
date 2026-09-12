@@ -16,6 +16,7 @@ export async function setupDatabase() {
   await pool.query('ALTER TABLE expenses ADD COLUMN IF NOT EXISTS person_id INTEGER');
   await pool.query('ALTER TABLE expenses ADD COLUMN IF NOT EXISTS is_payment_to_person BOOLEAN NOT NULL DEFAULT FALSE');
   await pool.query('ALTER TABLE debts ADD COLUMN IF NOT EXISTS person_id INTEGER');
+  await pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS password_set BOOLEAN NOT NULL DEFAULT TRUE');
   console.log('Migraciones aplicadas.');
 
   await seedDatabase();

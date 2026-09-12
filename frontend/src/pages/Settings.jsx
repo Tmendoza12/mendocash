@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Save } from 'lucide-react';
+import { Save, RotateCcw } from 'lucide-react';
 import api, { apiErrorMessage } from '../api/client.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
@@ -29,6 +29,16 @@ export default function Settings() {
     } catch (err) { toast.error(apiErrorMessage(err)); } finally { setSaving(false); }
   };
 
+  const reset = async () => {
+    setSaving(true);
+    const defaults = { moneda: 'COP', formato_fecha: 'YYYY-MM-DD', zona_horaria: 'America/Bogota' };
+    try {
+      await api.put('/settings', { settings: defaults });
+      setSettings((s) => ({ ...s, ...defaults }));
+      toast.success('Configuración restablecida a valores de fábrica.');
+    } catch (err) { toast.error(apiErrorMessage(err)); } finally { setSaving(false); }
+  };
+
   if (loading) return <Loading />;
 
   const readOnly = !hasPermission('configuracion.editar');
@@ -36,7 +46,12 @@ export default function Settings() {
   return (
     <div>
       <PageHeader title="Configuración" subtitle="Parámetros generales del sistema"
-        actions={!readOnly ? <button className="btn-primary" onClick={save} disabled={saving}><Save className="h-4 w-4" /> {saving ? 'Guardando...' : 'Guardar'}</button> : null} />
+        actions={!readOnly ? (
+          <div className="flex gap-2">
+            <button className="btn-secondary" onClick={reset} disabled={saving}><RotateCcw className="h-4 w-4" /> Restablecer</button>
+            <button className="btn-primary" onClick={save} disabled={saving}><Save className="h-4 w-4" /> {saving ? 'Guardando...' : 'Guardar'}</button>
+          </div>
+        ) : null} />
 
       <div className="grid gap-4 lg:grid-cols-2">
         <div className="card space-y-4 p-4">

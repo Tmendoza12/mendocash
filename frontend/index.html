@@ -3245,6 +3245,17 @@
                         JSON.stringify(result.data.user)
                     );
 
+                    if (result.data.must_set_password) {
+                        localStorage.setItem(
+                            "finanzas_must_set_password",
+                            "1"
+                        );
+                    } else {
+                        localStorage.removeItem(
+                            "finanzas_must_set_password"
+                        );
+                    }
+
                     window.location.href = "/app.html";
 
                 })

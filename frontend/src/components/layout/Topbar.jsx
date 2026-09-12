@@ -47,7 +47,10 @@ export default function Topbar({ onMenu }) {
     .toUpperCase();
 
   return (
-    <header className="sticky top-0 z-20 flex h-[78px] items-center justify-between border-b border-[#dce8ec] bg-white px-[31px] dark:border-navy-500/40 dark:bg-navy-700">
+    <header
+      className="sticky top-0 z-20 flex min-h-[78px] items-center justify-between border-b border-[#dce8ec] bg-white px-[31px] dark:border-navy-500/40 dark:bg-navy-700"
+      style={{ paddingTop: 'env(safe-area-inset-top)' }}
+    >
       <div className="flex items-center gap-3">
         <button className="btn-ghost px-2 lg:hidden" onClick={onMenu} aria-label="Abrir menú de navegación">
           <Menu className="h-5 w-5" />

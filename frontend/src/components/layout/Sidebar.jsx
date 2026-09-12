@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard, Wallet, ArrowDownCircle, ArrowUpCircle, ArrowLeftRight, ListOrdered,
   Tags, Target, RefreshCcw, HandCoins, Users as UsersIcon, CreditCard, BarChart3,
-  CalendarDays, ShieldCheck, UserCog, Settings, PiggyBank,
+  CalendarDays, ShieldCheck, UserCog, Settings, PiggyBank, ChevronDown,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 
@@ -54,6 +55,17 @@ const NAV = [
 
 export default function Sidebar({ open, onClose }) {
   const { hasPermission } = useAuth();
+  const [collapsed, setCollapsed] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('mendocash_collapsed') || '{}'); } catch { return {}; }
+  });
+
+  const toggle = (section) => {
+    setCollapsed((c) => {
+      const next = { ...c, [section]: !c[section] };
+      localStorage.setItem('mendocash_collapsed', JSON.stringify(next));
+      return next;
+    });
+  };
 
   return (
     <>
@@ -67,7 +79,7 @@ export default function Sidebar({ open, onClose }) {
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex h-[78px] items-center gap-3.5 border-b border-white/[0.08] px-[29px]">
+        <div className="flex min-h-[78px] items-center gap-3.5 border-b border-white/[0.08] px-[29px]" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
           <img src="/icons/logo.png" alt="MendoCash" className="h-11 w-11 object-contain" />
           <span className="font-serif text-[31px] font-bold leading-none tracking-[-1.2px] text-white">
             Mendo<span className="text-[#20bea8]">Cash</span>
@@ -77,12 +89,19 @@ export default function Sidebar({ open, onClose }) {
           {NAV.map((group) => {
             const items = group.items.filter((i) => hasPermission(i.permission));
             if (!items.length) return null;
+            const isCollapsed = collapsed[group.section];
             return (
               <div key={group.section} className="mb-[21px]">
-                <p className="mx-[15px] mb-[9px] text-[11px] font-bold uppercase tracking-[0.072em] text-[#36b9aa]">
-                  {group.section}
-                </p>
-                {items.map((item) => (
+                <button
+                  type="button"
+                  onClick={() => toggle(group.section)}
+                  aria-expanded={!isCollapsed}
+                  className="mx-[15px] mb-[9px] flex w-[calc(100%-30px)] items-center justify-between text-[11px] font-bold uppercase tracking-[0.072em] text-[#36b9aa] transition-colors hover:text-white"
+                >
+                  <span>{group.section}</span>
+                  <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isCollapsed ? '-rotate-90' : ''}`} />
+                </button>
+                {!isCollapsed && items.map((item) => (
                   <NavLink
                     key={item.to}
                     to={item.to}

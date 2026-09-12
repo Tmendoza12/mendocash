@@ -25,6 +25,7 @@ import Roles from './pages/Roles.jsx';
 import Audit from './pages/Audit.jsx';
 import Settings from './pages/Settings.jsx';
 import Profile from './pages/Profile.jsx';
+import SetPassword from './pages/SetPassword.jsx';
 
 function Protected({ children, permission }) {
   const { user, loading, hasPermission } = useAuth();
@@ -38,8 +39,9 @@ function Protected({ children, permission }) {
 }
 
 export default function App() {
-  const { user, loading } = useAuth();
+  const { user, loading, mustSetPassword } = useAuth();
   if (loading) return <Loading />;
+  if (mustSetPassword) return <SetPassword />;
 
   return (
     <Routes>

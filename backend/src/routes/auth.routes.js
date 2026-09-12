@@ -3,7 +3,7 @@ import { body } from 'express-validator';
 import { authenticate } from '../middleware/auth.js';
 import { validate } from '../middleware/errorHandler.js';
 import {
-  login, logout, me, changePassword, forgotPassword, resetPassword, updateProfile, googleLogin, register,
+  login, logout, me, changePassword, forgotPassword, resetPassword, updateProfile, googleLogin, register, setPassword,
 } from '../controllers/auth.controller.js';
 import { loginLimiter } from '../middleware/rateLimit.js';
 
@@ -44,6 +44,14 @@ router.post(
   body('new_password').isLength({ min: 8 }).withMessage('La nueva contraseña debe tener al menos 8 caracteres.'),
   validate,
   changePassword
+);
+
+router.post(
+  '/set-password',
+  authenticate,
+  body('password').isLength({ min: 8 }).withMessage('La contraseña debe tener al menos 8 caracteres.'),
+  validate,
+  setPassword
 );
 
 router.post('/forgot-password', body('email').isEmail(), validate, forgotPassword);

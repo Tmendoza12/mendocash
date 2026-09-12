@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS users (
   phone         VARCHAR(50),
   avatar_url    TEXT,
   is_active     BOOLEAN NOT NULL DEFAULT TRUE,
+  password_set  BOOLEAN NOT NULL DEFAULT TRUE,
   last_login_at TIMESTAMPTZ,
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at    TIMESTAMPTZ NOT NULL DEFAULT now()

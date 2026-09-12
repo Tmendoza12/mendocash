@@ -129,18 +129,15 @@ export default function Accounts() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             <TextInput label="Número / identificador" value={form.number || ''} onChange={(e) => setForm({ ...form, number: e.target.value })} />
-            <MoneyInput label="Saldo inicial" value={form.initial_balance} onChange={(e) => setForm({ ...form, initial_balance: e.target.value })} />
-          </div>
-          <div className="grid grid-cols-2 gap-3">
             <SelectInput label="Estado" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
               <option value="active">Activa</option>
               <option value="inactive">Inactiva</option>
             </SelectInput>
-            <label className="flex items-end gap-2 pb-2 text-sm text-slate-600 dark:text-slate-300">
-              <input type="checkbox" checked={form.allow_overdraft} onChange={(e) => setForm({ ...form, allow_overdraft: e.target.checked })} className="h-4 w-4" />
-              Permitir sobregiro
-            </label>
           </div>
+          <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+            <input type="checkbox" checked={form.allow_overdraft} onChange={(e) => setForm({ ...form, allow_overdraft: e.target.checked })} className="h-4 w-4" />
+            Permitir sobregiro
+          </label>
           <Textarea label="Descripción" value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} />
           <div className="flex justify-end gap-2">
             <button type="button" className="btn-secondary" onClick={() => setModal(false)}>Cancelar</button>

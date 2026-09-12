@@ -12,6 +12,7 @@ export function AuthProvider({ children }) {
     }
   });
   const [loading, setLoading] = useState(true);
+  const [mustSetPassword, setMustSetPassword] = useState(() => localStorage.getItem('finanzas_must_set_password') === '1');
 
   const hasPermission = useCallback(
     (perm) => {
@@ -71,8 +72,13 @@ export function AuthProvider({ children }) {
     localStorage.setItem('finanzas_user', JSON.stringify(u));
   };
 
+  const clearMustSetPassword = () => {
+    localStorage.removeItem('finanzas_must_set_password');
+    setMustSetPassword(false);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, loginWithGoogle, logout, hasPermission, updateUser }}>
+    <AuthContext.Provider value={{ user, loading, mustSetPassword, clearMustSetPassword, login, loginWithGoogle, logout, hasPermission, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

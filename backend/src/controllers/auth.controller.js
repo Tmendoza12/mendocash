@@ -56,7 +56,7 @@ export const login = asyncHandler(async (req, res) => {
 
   const { rows: sessionRows } = await query(
     `INSERT INTO sessions (user_id, token, ip_address, user_agent, expires_at)
-     VALUES ($1, $2, $3, $4, now() + interval '7 days') RETURNING id`,
+     VALUES ($1, $2, $3, $4, now() + interval '3650 days') RETURNING id`,
     [user.id, token, getIp(req), req.headers['user-agent']?.slice(0, 500) || null]
   );
   const session = sessionRows[0];
@@ -102,7 +102,7 @@ export const register = asyncHandler(async (req, res) => {
   const token = signToken({ sub: user.id });
   const { rows: sessionRows } = await query(
     `INSERT INTO sessions (user_id, token, ip_address, user_agent, expires_at)
-     VALUES ($1, $2, $3, $4, now() + interval '7 days') RETURNING id`,
+     VALUES ($1, $2, $3, $4, now() + interval '3650 days') RETURNING id`,
     [user.id, token, getIp(req), req.headers['user-agent']?.slice(0, 500) || null]
   );
   const finalToken = signToken({ sub: user.id, sid: sessionRows[0].id });
@@ -138,8 +138,8 @@ export const googleLogin = asyncHandler(async (req, res) => {
     const randomPassword = crypto.randomBytes(16).toString('hex');
     const password_hash = await hashPassword(randomPassword);
     const { rows: created } = await query(
-      `INSERT INTO users (full_name, email, password_hash, avatar_url)
-       VALUES ($1, $2, $3, $4) RETURNING *`,
+      `INSERT INTO users (full_name, email, password_hash, avatar_url, password_set)
+       VALUES ($1, $2, $3, $4, FALSE) RETURNING *`,
       [payload.name || email, email, password_hash, payload.picture || null]
     );
     user = created[0];
@@ -164,7 +164,7 @@ export const googleLogin = asyncHandler(async (req, res) => {
   const token = signToken({ sub: user.id });
   const { rows: sessionRows } = await query(
     `INSERT INTO sessions (user_id, token, ip_address, user_agent, expires_at)
-     VALUES ($1, $2, $3, $4, now() + interval '7 days') RETURNING id`,
+     VALUES ($1, $2, $3, $4, now() + interval '3650 days') RETURNING id`,
     [user.id, token, getIp(req), req.headers['user-agent']?.slice(0, 500) || null]
   );
   const finalToken = signToken({ sub: user.id, sid: sessionRows[0].id });
@@ -179,8 +179,19 @@ export const googleLogin = asyncHandler(async (req, res) => {
     token: finalToken,
     user: userPayload(access.user, access.permissions, access.roles),
     is_new: isNew,
+    must_set_password: !user.password_set,
     google: { email, name: payload.name || null, picture: payload.picture || null },
   });
+});
+
+export const setPassword = asyncHandler(async (req, res) => {
+  const { password } = req.body;
+  const password_hash = await hashPassword(password);
+  await query("UPDATE users SET password_hash = $2, password_set = TRUE, updated_at = now() WHERE id = $1", [req.user.id, password_hash]);
+  await withTransaction(async (client) => {
+    await logAudit(client, { userId: req.user.id, action: 'set_password', module: 'auth', recordId: req.user.id, req });
+  });
+  res.json({ message: 'Contraseña configurada correctamente.' });
 });
 
 export const changePassword = asyncHandler(async (req, res) => {
